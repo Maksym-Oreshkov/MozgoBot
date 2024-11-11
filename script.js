@@ -7,6 +7,7 @@ let currentChatIndex = null;
 const chatContainer = document.getElementById("chatContainer");
 const chatList = document.getElementById("chatList");
 const userInput = document.getElementById("userInput");
+const welcomeMessage = document.querySelector(".welcome-message");
 
 function setLocalStorage() {
   localStorage.setItem("chats", JSON.stringify(chats));
@@ -92,7 +93,7 @@ async function sendMessage() {
 
   if (!userInputValue) return; // Если сообщение пустое, ничего не делаем
   // Скрыть приветственное сообщение
-  const welcomeMessage = document.querySelector(".welcome-message");
+
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
   }
@@ -317,13 +318,32 @@ btnChatPanel.addEventListener("click", function () {
     } else {
       removeActivePanel();
       panel.classList.add("active");
+      requestPanel.classList.remove("welcome");
+      requestPanel.classList.add("visible");
+      // Скрываем приветственное сообщение
+      if (welcomeMessage) {
+        welcomeMessage.style.display = "none";
+      }
     }
   });
 });
 
-//// Темная тема //////
+//// Темная тема и ее созранение при обнове /////
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-theme");
+}
+
 profileBtn.addEventListener("click", function () {
   document.body.classList.toggle("dark-theme");
+
+  // Save the current theme to localStorage
+  if (document.body.classList.contains("dark-theme")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
 });
 
 /////// Новый чат /////////
