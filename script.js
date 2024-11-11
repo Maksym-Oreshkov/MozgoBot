@@ -91,10 +91,17 @@ async function sendMessage() {
   const userInputValue = userInput.value.trim(); // Получаем сообщение пользователя
 
   if (!userInputValue) return; // Если сообщение пустое, ничего не делаем
+  // Скрыть приветственное сообщение
+  const welcomeMessage = document.querySelector(".welcome-message");
+  if (welcomeMessage) {
+    welcomeMessage.style.display = "none";
+  }
 
   if (requestPanel.classList.contains("welcome")) {
     requestPanel.classList.remove("welcome");
   }
+
+  requestPanel.classList.add("visible");
 
   if (currentChatIndex === null) {
     // Если это новый чат, сохраняем его с первым сообщением
@@ -374,7 +381,45 @@ textarea.addEventListener("keydown", function (event) {
 
 document.addEventListener("DOMContentLoaded", function () {
   getLocalStorage();
+  showWelcomeMessage();
+
+  // Задержка перед появлением request-panel
+  setTimeout(function () {
+    requestPanel.classList.add("visible");
+  }, 1000); // 1 секунды задержки
 });
+
+//// Приветствие //////
+
+function typeWritter(elem, text, speed) {
+  let i = 0;
+  function typing() {
+    if (i < text.length) {
+      elem.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+function showWelcomeMessage() {
+  let welcomeMessage = document.querySelector(".welcome-message");
+  if (!welcomeMessage) {
+    welcomeMessage = document.createElement("div");
+    welcomeMessage.classList.add("welcome-message");
+    document.body.appendChild(welcomeMessage);
+  } else {
+    welcomeMessage.style.display = "block";
+    welcomeMessage.innerHTML = "";
+  }
+
+  const welcomeText =
+    "Добро пожаловать, я ваш персональный ассистент, чем я вам могу помочь?";
+  setTimeout(function () {
+    typeWritter(welcomeMessage, welcomeText, 20);
+  }, 1000);
+}
 
 /////////// Голосовой ввод строки через микрофон /////////////////
 

@@ -286,13 +286,31 @@ li {
   opacity: 1;
 }
 
+.welcome-message {
+  position: sticky;
+  left: 50%;
+  top: 40%;
+  text-align: center;
+  font-size: 24px;
+  z-index: 1000;
+  color: var(--dark-text-color);
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: default;
+}
+
 .request-panel {
   display: flex;
   justify-content: center;
   position: sticky;
   top: 92%;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
+.request-panel.visible {
+  opacity: 1;
+}
 .request-panel.welcome {
   position: sticky;
   top: 50%;
