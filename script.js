@@ -92,6 +92,10 @@ async function sendMessage() {
 
   if (!userInputValue) return; // Если сообщение пустое, ничего не делаем
 
+  if (requestPanel.classList.contains("welcome")) {
+    requestPanel.classList.remove("welcome");
+  }
+
   if (currentChatIndex === null) {
     // Если это новый чат, сохраняем его с первым сообщением
     saveChat(userInputValue);
@@ -288,6 +292,7 @@ const btnDelChat = document.querySelector(".btn-del-chat-panel");
 const panels = document.querySelectorAll(".panel");
 const profileBtn = document.querySelector(".profile");
 const textarea = document.querySelector(".request__input");
+const requestPanel = document.querySelector(".request-panel");
 const micBtn = document.getElementById("micBtn");
 
 // Функция для удаления класса "active" у всех панелей

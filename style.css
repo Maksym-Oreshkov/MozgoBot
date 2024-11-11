@@ -293,6 +293,14 @@ li {
   top: 92%;
 }
 
+.request-panel.welcome {
+  position: sticky;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
 .request-btn {
   margin-right: 1rem;
   background-color: transparent;
