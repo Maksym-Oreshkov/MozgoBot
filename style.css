@@ -148,8 +148,9 @@ textarea {
 }
 
 .btn-del-chat-panel {
-  position: fixed;
-  width: 16.6%;
+  position: absolute; /* Абсолютное позиционирование относительно родителя (.session) */
+  bottom: 0; /* Прикреплена к нижней части родителя */
+  width: 100%; /* Занимает всю ширину родителя */
   text-decoration: none;
   color: var(--dark-text-color);
   font-size: 1.6rem;
@@ -158,7 +159,7 @@ textarea {
   cursor: pointer;
   transition: all 0.3s;
   background-color: var(--assistant-message);
-  bottom: 0;
+  text-align: center; /* Выравнивание текста по центру */
 }
 
 .btn-del-chat-panel:hover {
@@ -200,12 +201,6 @@ p {
   transition: all 0.5s;
   z-index: 299;
 }
-@media (max-width: 480px) {
-  .chat-session {
-    width: 10%;
-    z-index: 300;
-  }
-}
 
 .chat-session ul {
   list-style: none;
@@ -234,11 +229,6 @@ li {
   font-size: 1.6rem;
   color: var(--dark-text-color);
 }
-@media (max-width: 768px) {
-  li {
-    font-size: 1rem;
-  }
-}
 
 #chatList {
   max-height: 85%; /* Установите нужную вам высоту */
@@ -249,23 +239,14 @@ li {
   position: relative;
   width: 100%;
   max-height: 100%;
-  min-width: 480px;
-}
-@media (max-width: 480px) {
-  .main-body {
-    padding: 1rem 4rem 2rem 4rem;
-  }
 }
 
 .active {
   width: 20%;
 }
-@media (max-width: 480px) {
-  .active {
-    width: 40%;
-  }
-}
+
 .session {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -276,6 +257,7 @@ li {
   overflow: hidden;
   visibility: hidden;
   pointer-events: none;
+  height: 100%;
 }
 
 .panel.active .session {
@@ -384,11 +366,6 @@ li {
   overflow-y: auto; /* Включаем вертикальный скролл */
   opacity: 0.8;
 }
-@media (max-width: 768px) {
-  .request__input {
-    font-size: 1.4rem;
-  }
-}
 
 .request__input:focus {
   outline: none;
@@ -408,11 +385,6 @@ li {
   max-height: 70%;
   transition: 0.3s;
 }
-@media (max-width: 768px) {
-  #chatContainer {
-    padding: 0 2rem 0 2rem;
-  }
-}
 
 /* Сообщения пользователя */
 .user-message {
@@ -426,11 +398,6 @@ li {
   max-width: 80%;
   word-wrap: break-word;
   opacity: 0.8;
-}
-@media (max-width: 768px) {
-  .user-message {
-    font-size: 1.4rem;
-  }
 }
 
 /* Сообщения ассистента (AI) */
@@ -448,11 +415,6 @@ li {
   white-space: pre-wrap; /* Сохраняет пробелы и переносы строк */
   margin: 10px 0; /* Отступы между сообщениями */
 }
-@media (max-width: 768px) {
-  .assistant-message {
-    font-size: 1.4rem;
-  }
-}
 
 .navbar {
   position: relative;
@@ -461,11 +423,6 @@ li {
   justify-content: space-between;
   padding: 2rem 8rem 0rem 8rem;
   width: 100%;
-}
-@media (max-width: 768px) {
-  .navbar {
-    padding: 2rem 2rem 0rem 2rem;
-  }
 }
 
 .logo-nav {
@@ -478,12 +435,6 @@ li {
   color: var(--icons);
   cursor: default;
   gap: 1rem;
-}
-@media (max-width: 768px) {
-  .logo-nav {
-    width: 10rem;
-    height: 2rem;
-  }
 }
 
 .logo {
@@ -506,28 +457,53 @@ li {
   transform: scale(0.96);
 }
 
-.profile {
-  width: 4rem;
-  height: 4rem;
-  background-color: var(--icons); /* Цвет иконки */
-  -webkit-mask: url("/icons/profile_btn.svg") center / contain no-repeat;
-  mask: url("/icons/profile_btn.svg") center / contain no-repeat;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.profile:hover {
-  background-color: var(--hover); /* Цвет иконки */
-  transform: scale(1.26);
-}
-.profile:active {
-  color: var(--secondary-color);
-  transform: scale(0.96);
+@media (max-width: 1024px) {
+  .active {
+    width: 40%;
+  }
 }
 
 @media (max-width: 768px) {
-  .profile {
-    width: 2.2rem;
-    height: 2.2rem;
+  li {
+    font-size: 1rem;
+  }
+  .request__input {
+    font-size: 1.4rem;
+  }
+  #chatContainer {
+    padding: 0 2rem 0 2rem;
+  }
+  .user-message {
+    font-size: 1.4rem;
+  }
+  .assistant-message {
+    font-size: 1.4rem;
+  }
+  .navbar {
+    padding: 2rem 2rem 0rem 8rem;
+  }
+  .logo {
+    width: 3rem;
+    height: 3rem;
+  }
+  .active {
+    width: 40%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-session {
+    position: fixed;
+    height: 100%;
+    z-index: 300;
+  }
+  .main-body {
+    padding: 1rem 4rem 2rem 4rem;
+  }
+  .chat-session {
+    opacity: 0.9;
+  }
+  .active {
+    width: 60%;
   }
 }
