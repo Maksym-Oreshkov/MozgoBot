@@ -298,7 +298,7 @@ const btnChatPanel = document.querySelector(".btn-chat-panel");
 const btnNewChat = document.querySelector(".btn-new-chat-panel");
 const btnDelChat = document.querySelector(".btn-del-chat-panel");
 const panels = document.querySelectorAll(".panel");
-const profileBtn = document.querySelector(".profile");
+const logoeBtn = document.querySelector(".logo");
 const textarea = document.querySelector(".request__input");
 const requestPanel = document.querySelector(".request-panel");
 const micBtn = document.getElementById("micBtn");
@@ -335,7 +335,7 @@ if (savedTheme === "dark") {
   document.body.classList.add("dark-theme");
 }
 
-profileBtn.addEventListener("click", function () {
+logoeBtn.addEventListener("click", function () {
   document.body.classList.toggle("dark-theme");
 
   // Save the current theme to localStorage
@@ -406,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Задержка перед появлением request-panel
   setTimeout(function () {
     requestPanel.classList.add("visible");
-  }, 1000); // 1 секунды задержки
+  }, 2000); // 1 секунды задержки
 });
 
 //// Приветствие //////
@@ -437,7 +437,7 @@ function showWelcomeMessage() {
   const welcomeText =
     "Добро пожаловать, я ваш персональный ассистент, чем я вам могу помочь?";
   setTimeout(function () {
-    typeWritter(welcomeMessage, welcomeText, 20);
+    typeWritter(welcomeMessage, welcomeText, 10);
   }, 1000);
 }
 

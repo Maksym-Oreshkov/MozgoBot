@@ -287,15 +287,17 @@ li {
 }
 
 .welcome-message {
-  position: sticky;
-  left: 50%;
+  position: fixed;
   top: 40%;
-  text-align: center;
-  font-size: 24px;
-  z-index: 1000;
-  color: var(--dark-text-color);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 72rem;
+  text-align: left;
   font-size: 2rem;
   font-weight: 300;
+  color: var(--dark-text-color);
+  z-index: 1000;
   cursor: default;
 }
 
@@ -467,6 +469,7 @@ li {
 }
 
 .logo-nav {
+  display: flex;
   /*   background: url("/logos/favicon.svg") center / cover no-repeat; */
   font-family: "Julius Sans One", sans-serif;
   text-align: start;
@@ -474,12 +477,33 @@ li {
   font-size: 2rem;
   color: var(--icons);
   cursor: default;
+  gap: 1rem;
 }
 @media (max-width: 768px) {
   .logo-nav {
     width: 10rem;
     height: 2rem;
   }
+}
+
+.logo {
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--icons); /* Цвет иконки */
+  -webkit-mask: url("/logos/logo2.png") center / contain no-repeat;
+  mask: url("/logos/logo2.png") center / contain no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logo:hover {
+  background-color: var(--hover); /* Цвет иконки */
+  transform: scale(1.26);
+}
+.logo:active {
+  color: var(--secondary-color);
+  transform: scale(0.96);
 }
 
 .profile {
