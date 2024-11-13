@@ -507,7 +507,7 @@ li {
     width: 60%;
   }
   .request-panel {
-    top: 85%;
+    top: 90%;
   }
   .request__input {
     width: 100%;
@@ -518,5 +518,17 @@ li {
     left: 45%;
     transform: translateX(-40%);
     width: 100%;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Занимает всю высоту окна браузера */
   }
 }
