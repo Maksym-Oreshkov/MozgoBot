@@ -434,8 +434,7 @@ function showWelcomeMessage() {
     welcomeMessage.innerHTML = "";
   }
 
-  const welcomeText =
-    "Добро пожаловать, я ваш персональный ассистент, чем я вам могу помочь?";
+  const welcomeText = "Привет! Я – МозгоБот. Чем могу помочь?";
   setTimeout(function () {
     typeWritter(welcomeMessage, welcomeText, 10);
   }, 1000);

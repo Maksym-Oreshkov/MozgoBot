@@ -271,7 +271,7 @@ li {
 .welcome-message {
   position: fixed;
   top: 40%;
-  left: 50%;
+  left: 60%;
   transform: translateX(-50%);
   width: 80%;
   max-width: 72rem;
@@ -505,5 +505,18 @@ li {
   }
   .active {
     width: 60%;
+  }
+  .request-panel {
+    top: 85%;
+  }
+  .request__input {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  .welcome-message {
+    font-size: 1.8rem;
+    left: 45%;
+    transform: translateX(-40%);
+    width: 100%;
   }
 }
