@@ -10,50 +10,48 @@
     <meta property="og:image" content="https://oreshkof.ru/logos/og-logo.png" /> -->
     <meta property="og:site_name" content="Mozgobot" />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="/style.css?v=1.0.4" />
+    <link rel="stylesheet" href="/style.css?v=1.0.12" />
     <title>Mozgobot</title>
   </head>
   <body>
-    <section class="app">
-      <div class="main-section">
-        <div class="btn-chat-panel"></div>
-        <div class="chat-session panel">
+    <div class="main-section">
+      <div class="btn-chat-panel"></div>
+      <div class="chat-session panel">
+        <div class="margin-bottom-60px"></div>
+        <div class="session" id="session">
+          <div class="session-history">
+            <h3>история сессий</h3>
+          </div>
+          <div class="margin-bottom-20px"></div>
+          <div class="btn-new-chat-panel">﹢ новый чат</div>
+          <ul id="chatList"></ul>
           <div class="margin-bottom-60px"></div>
-          <div class="session" id="session">
-            <div class="session-history">
-              <h3>история сессий</h3>
-            </div>
-            <div class="margin-bottom-20px"></div>
-            <div class="btn-new-chat-panel">﹢ новый чат</div>
-            <ul id="chatList"></ul>
-            <div class="margin-bottom-60px"></div>
-            <div class="btn-del-chat-panel">очистить историю сессий</div>
-          </div>
-        </div>
-        <div class="main-body">
-          <div class="navbar margin-bottom-40px">
-            <div class="logo-nav">
-              <h1>MozgoBot</h1>
-              <div class="logo"></div>
-            </div>
-          </div>
-          <div id="chatContainer">
-            <!-- Сюда будут добавляться сообщения -->
-          </div>
-          <div class="welcome-message"></div>
-          <div class="request-panel welcome">
-            <button id="micBtn" class="mic-btn request-btn"></button>
-            <textarea
-              id="userInput"
-              class="request__input"
-              rows="1"
-              placeholder="Введите ваш запрос"
-            ></textarea>
-            <button id="sendMessageBtn" class="submit-btn request-btn"></button>
-          </div>
+          <div class="btn-del-chat-panel">очистить историю сессий</div>
         </div>
       </div>
-    </section>
-    <script src="/script.js?v=1.0.4"></script>
+      <div class="main-body">
+        <div class="navbar margin-bottom-40px">
+          <div class="logo-nav">
+            <h1>MozgoBot</h1>
+            <div class="logo"></div>
+          </div>
+        </div>
+        <div id="chatContainer">
+          <!-- Сюда будут добавляться сообщения -->
+        </div>
+        <div class="welcome-message"></div>
+        <div class="request-panel welcome">
+          <button id="micBtn" class="mic-btn request-btn"></button>
+          <textarea
+            id="userInput"
+            class="request__input"
+            rows="1"
+            placeholder="Введите ваш запрос"
+          ></textarea>
+          <button id="sendMessageBtn" class="submit-btn request-btn"></button>
+        </div>
+      </div>
+    </div>
+    <script src="/script.js?v=1.0.12"></script>
   </body>
 </html>

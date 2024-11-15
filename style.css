@@ -39,6 +39,7 @@
 html {
   font-size: 62.5%;
   transition: all 0.5s ease-in;
+  height: 100%;
 }
 
 .margin-bottom-20px {
@@ -55,14 +56,7 @@ html {
 
 body {
   background: var(--background-color);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
   font-family: "Roboto";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
 }
 
 h3 {
@@ -94,14 +88,6 @@ textarea {
   bottom: 1rem;
   right: 1rem;
 }
-.app {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
 
 .chat-buttons {
   display: flex;
@@ -118,7 +104,7 @@ textarea {
   mask: url("/icons/left_panel_btn.svg") center / contain no-repeat;
   width: 3.8rem;
   height: 3.8rem;
-  z-index: 400;
+  z-index: 1000;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -167,13 +153,14 @@ textarea {
 }
 
 .main-section {
-  position: absolute;
+  position: relative;
   /*   background: var(--background-color); */
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   text-align: center;
   z-index: 200;
+  overflow: hidden;
   transition: all 0.2s ease-in 0.2s;
 }
 
@@ -238,7 +225,6 @@ li {
 .main-body {
   position: relative;
   width: 100%;
-  max-height: 100%;
 }
 
 .active {
@@ -271,10 +257,9 @@ li {
 .welcome-message {
   position: fixed;
   top: 40%;
-  left: 60%;
+  left: 55%;
   transform: translateX(-50%);
   width: 80%;
-  max-width: 72rem;
   text-align: left;
   font-size: 2rem;
   font-weight: 300;
@@ -297,7 +282,7 @@ li {
 }
 .request-panel.welcome {
   position: sticky;
-  top: 50%;
+  top: 48%;
   left: 0;
   width: 100%;
   transform: translateY(-50%);
@@ -482,10 +467,7 @@ li {
   .navbar {
     padding: 2rem 2rem 0rem 8rem;
   }
-  .logo {
-    width: 3rem;
-    height: 3rem;
-  }
+
   .active {
     width: 40%;
   }
@@ -497,20 +479,25 @@ li {
     height: 100%;
     z-index: 300;
   }
-  .main-body {
-    padding: 1rem 4rem 2rem 4rem;
-  }
+
   .chat-session {
     opacity: 0.9;
+    z-index: 500;
+  }
+  #chatContainer {
+    padding: 0 2rem 0 2rem;
+    max-height: 60%;
   }
   .active {
     width: 60%;
   }
   .request-panel {
+    position: sticky;
     top: 90%;
   }
   .request__input {
     width: 100%;
+    max-height: 5rem;
     font-size: 1.2rem;
   }
   .welcome-message {
@@ -519,16 +506,20 @@ li {
     transform: translateX(-40%);
     width: 100%;
   }
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+}
+@media (max-height: 400px) {
+  #chatContainer {
+    max-height: 50%;
   }
-
-  .app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Занимает всю высоту окна браузера */
+  .request__input {
+    max-height: 6rem;
+  }
+  .welcome-message {
+    left: 70%;
+    transform: translateX(-55%);
+  }
+  .request-panel.welcome {
+    top: 60%;
+    transform: translateY(-50%);
   }
 }
