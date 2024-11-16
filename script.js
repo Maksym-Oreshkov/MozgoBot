@@ -67,14 +67,20 @@ function loadChat(index) {
 // Сохраняем новый чат в массив и обновляем интерфейс
 function saveChat(firstMessage) {
   const chatIndex = chats.length;
+  const systemPrompt =
+    "Ты ассистент, который помогает пользователям с их запросами.";
 
   // Создаем новый чат с первым сообщением пользователя
   chats.push({
-    messages: [{ role: "user", content: firstMessage }],
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: firstMessage },
+    ],
   });
 
   // Добавляем новый элемент в список чатов в левой колонке
   const newChatItem = document.createElement("li");
+  newChatItem.textContent = getShortenedContent(firstMessage);
   newChatItem.textContent = getShortenedContent(firstMessage); // Сокращаем сообщение
   newChatItem.addEventListener("click", () => loadChat(chatIndex)); // При нажатии загружаем чат
   chatList.appendChild(newChatItem);
