@@ -256,11 +256,11 @@ li {
 }
 
 .welcome-message {
-  position: fixed;
+  position: sticky;
   top: 40%;
-  left: 55%;
-  transform: translateX(-50%);
-  width: 80%;
+  padding-left: 15%;
+  width: 100%;
+  transform: translateY(-50%);
   text-align: left;
   font-size: 2rem;
   font-weight: 300;
@@ -448,9 +448,7 @@ li {
     height: 100vh;
     max-height: 100%;
   }
-  .welcome-message {
-    top: 5%;
-  }
+
   .active {
     width: 40%;
   }
@@ -461,9 +459,7 @@ li {
     height: 100vh;
     max-height: 100%;
   }
-  .welcome-message {
-    top: 5%;
-  }
+
   li {
     font-size: 1rem;
   }
@@ -499,9 +495,6 @@ li {
     opacity: 0.9;
     z-index: 500;
   }
-  .welcome-message {
-    top: 20%;
-  }
 
   #chatContainer {
     padding: 0 1rem;
@@ -521,9 +514,8 @@ li {
     font-size: 1.6rem;
   }
   .welcome-message {
-    font-size: 1.8rem;
-    left: 45%;
-    transform: translateX(-40%);
+    font-size: 1.6rem;
+    padding-left: 10%;
     width: 100%;
   }
 }
@@ -534,10 +526,7 @@ li {
   .request__input {
     max-height: 6rem;
   }
-  .welcome-message {
-    left: 70%;
-    transform: translateX(-55%);
-  }
+
   .request-panel.welcome {
     top: 60%;
     transform: translateY(-50%);
