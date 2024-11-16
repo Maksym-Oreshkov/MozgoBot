@@ -67,15 +67,9 @@ function loadChat(index) {
 // Сохраняем новый чат в массив и обновляем интерфейс
 function saveChat(firstMessage) {
   const chatIndex = chats.length;
-  const systemPrompt =
-    "Ты ассистент, который помогает пользователям с их запросами.";
-
   // Создаем новый чат с первым сообщением пользователя
   chats.push({
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: firstMessage },
-    ],
+    messages: [{ role: "user", content: firstMessage }],
   });
 
   // Добавляем новый элемент в список чатов в левой колонке
@@ -133,12 +127,20 @@ async function sendMessage() {
   userMessage.textContent = `${userInputValue}`;
   chatContainer.appendChild(userMessage);
 
+  userInput.value = "";
+
   // Прокручиваем вниз только если автопрокрутка включена
   if (shouldAutoScroll) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
-
-  userInput.value = "";
+  // Подготовим данные для API
+  const systemPrompt = [
+    {
+      role: "system",
+      content: "AAP_MozgoBot_SYSTEMPROMPT",
+    }, // Добавляем system prompt
+    ...chats[currentChatIndex].messages, // Добавляем сообщения пользователя и ассистента
+  ];
 
   // Объявляем переменную для отображения ответа
   let assistantMessageElement = document.createElement("div");
@@ -152,22 +154,19 @@ async function sendMessage() {
 
   // Отправляем запрос к API OpenAI для получения ответа
   try {
-    const response = await fetch(
-      "http://109.200.156.69:11434/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "aya-expanse:8b-q4_K_M",
-          messages: chats[currentChatIndex].messages,
-          temperature: 0.5,
-          max_tokens: 800,
-          stream: true,
-        }),
-      }
-    );
+    const response = await fetch("https://ai.mozgobot.ru/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "aya-expanse:8b-q5_K_M",
+        messages: systemPrompt, // Используем массив с system prompt
+        temperature: 0.5,
+        max_tokens: 800,
+        stream: true,
+      }),
+    });
 
     if (!response.ok) {
       if (response.status === 401) {
