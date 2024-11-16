@@ -57,6 +57,7 @@ html {
 body {
   background: var(--background-color);
   font-family: "Roboto";
+  height: 100%;
 }
 
 h3 {
@@ -443,12 +444,26 @@ li {
 }
 
 @media (max-width: 1024px) {
+  .main-section {
+    height: 100vh;
+    max-height: 100%;
+  }
+  .welcome-message {
+    top: 5%;
+  }
   .active {
     width: 40%;
   }
 }
 
 @media (max-width: 768px) {
+  .main-section {
+    height: 100vh;
+    max-height: 100%;
+  }
+  .welcome-message {
+    top: 5%;
+  }
   li {
     font-size: 1rem;
   }
@@ -474,31 +489,36 @@ li {
 }
 
 @media (max-width: 480px) {
-  .chat-session {
-    position: fixed;
-    height: 100%;
-    z-index: 300;
+  .main-section {
+    height: 100vh;
+    max-height: 100%;
   }
-
   .chat-session {
+    position: absolute;
+    height: 100%;
     opacity: 0.9;
     z-index: 500;
   }
+  .welcome-message {
+    top: 20%;
+  }
+
   #chatContainer {
-    padding: 0 2rem 0 2rem;
-    max-height: 60%;
+    padding: 0 1rem;
+    max-height: 70%;
   }
   .active {
     width: 60%;
   }
   .request-panel {
-    position: sticky;
+    position: fixed;
     top: 90%;
+    width: 100%;
   }
   .request__input {
     width: 100%;
-    max-height: 5rem;
-    font-size: 1.2rem;
+    max-height: 6rem;
+    font-size: 1.6rem;
   }
   .welcome-message {
     font-size: 1.8rem;
