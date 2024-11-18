@@ -49,6 +49,13 @@ function loadChat(index) {
   chatContainer.innerHTML = "";
 
   chat.messages.forEach((msg) => {
+    requestPanel.classList.remove("welcome");
+    requestPanel.classList.add("visible");
+    runOnMobile();
+    // Скрываем приветственное сообщение
+    if (welcomeMessage) {
+      welcomeMessage.style.display = "none";
+    }
     const messageElement = document.createElement("div");
     // Добавляем стили в зависимости от роли сообщения (user или assistant)
     if (msg.role === "user") {
@@ -315,7 +322,32 @@ function removeActivePanel() {
   });
 }
 
-// Добавляем обработчики событий к панелям один раз
+// Функция для активации всех панелей
+function activateActivePanel() {
+  panels.forEach((panel) => {
+    panel.classList.add("active");
+  });
+}
+
+// Функция для проверки мобильного разрешения
+function isMobile() {
+  return window.matchMedia("(max-width: 480px)").matches;
+}
+
+// Функция для управления состоянием панели
+function runOnMobile() {
+  if (isMobile()) {
+    // Если мобильное разрешение, скрываем панель
+    removeActivePanel();
+  } else {
+    // Если не мобильное разрешение, активируем панель с задержкой
+    setTimeout(function () {
+      activateActivePanel();
+    }, 2000); // 2 секунды задержки
+  }
+}
+
+// Обработчик клика для переключения панели
 btnChatPanel.addEventListener("click", function () {
   panels.forEach((panel) => {
     if (panel.classList.contains("active")) {
@@ -323,15 +355,15 @@ btnChatPanel.addEventListener("click", function () {
     } else {
       removeActivePanel();
       panel.classList.add("active");
-      requestPanel.classList.remove("welcome");
-      requestPanel.classList.add("visible");
-      // Скрываем приветственное сообщение
-      if (welcomeMessage) {
-        welcomeMessage.style.display = "none";
-      }
     }
   });
 });
+
+// Запускаем проверку разрешения при загрузке страницы
+runOnMobile();
+
+// Слушаем изменение размеров экрана и пересчитываем состояние
+window.addEventListener("resize", runOnMobile);
 
 //// Темная тема и ее созранение при обнове /////
 const savedTheme = localStorage.getItem("theme");
@@ -365,6 +397,14 @@ btnNewChat.addEventListener("click", function () {
 
   // Очищаем поле ввода
   userInput.value = "";
+
+  requestPanel.classList.remove("welcome");
+  requestPanel.classList.add("visible");
+  runOnMobile();
+  // Скрываем приветственное сообщение
+  if (welcomeMessage) {
+    welcomeMessage.style.display = "none";
+  }
 });
 
 /////// Очищаем историю чатов /////////
@@ -411,7 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Задержка перед появлением request-panel
   setTimeout(function () {
     requestPanel.classList.add("visible");
-  }, 2000); // 1 секунды задержки
+  }, 1000); // 1 секунды задержки
 });
 
 //// Приветствие //////
@@ -442,7 +482,7 @@ function showWelcomeMessage() {
   const welcomeText = "Привет! Я – МозгоБот. Чем могу помочь?";
   setTimeout(function () {
     typeWritter(welcomeMessage, welcomeText, 10);
-  }, 1000);
+  }, 2000);
 }
 
 /////////// Голосовой ввод строки через микрофон /////////////////

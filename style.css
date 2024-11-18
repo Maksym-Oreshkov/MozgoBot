@@ -265,7 +265,7 @@ li {
   font-size: 2rem;
   font-weight: 300;
   color: var(--dark-text-color);
-  z-index: 1000;
+  z-index: 200;
   cursor: default;
 }
 
@@ -409,6 +409,7 @@ li {
   justify-content: space-between;
   padding: 2rem 8rem 0rem 8rem;
   width: 100%;
+  z-index: 500;
 }
 
 .logo-nav {
@@ -495,13 +496,21 @@ li {
     opacity: 0.9;
     z-index: 500;
   }
+  .btn-new-chat-panel {
+    font-size: 2.2rem;
+  }
+  li {
+    font-size: 2rem;
+    font-weight: 300;
+  }
 
   #chatContainer {
     padding: 0 1rem;
     max-height: 70%;
   }
+
   .active {
-    width: 60%;
+    width: 100%;
   }
   .request-panel {
     position: fixed;
