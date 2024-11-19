@@ -144,7 +144,7 @@ async function sendMessage() {
   const systemPrompt = [
     {
       role: "system",
-      content: "AAP_MozgoBot_SYSTEMPROMPT",
+      content: CONFIG.systemPrompt,
     }, // Добавляем system prompt
     ...chats[currentChatIndex].messages, // Добавляем сообщения пользователя и ассистента
   ];
@@ -159,18 +159,22 @@ async function sendMessage() {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
+  // Формируем полный URL, комбинируя базовый URL и путь
+  const apiUrl = `${CONFIG.apiUrl}/v1/chat/completions`;
+
   // Отправляем запрос к API OpenAI для получения ответа
   try {
-    const response = await fetch("https://ai.mozgobot.ru/v1/chat/completions", {
+    const response = await fetch(apiUrl, {
+      // Используем CONFIG.apiUrl
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "aya-expanse:8b-q5_K_M",
+        model: CONFIG.model, // Используем CONFIG.model
         messages: systemPrompt, // Используем массив с system prompt
-        temperature: 0.5,
-        max_tokens: 800,
+        temperature: CONFIG.temperature, // Используем CONFIG.temperature
+        max_tokens: CONFIG.max_tokens, // Используем CONFIG.max_tokens
         stream: true,
       }),
     });
