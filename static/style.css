@@ -101,8 +101,9 @@ textarea {
   top: 2.2rem;
   left: 1rem;
   background-color: var(--icons); /* Цвет иконки */
-  -webkit-mask: url("/icons/left_panel_btn.svg") center / contain no-repeat;
-  mask: url("/icons/left_panel_btn.svg") center / contain no-repeat;
+  -webkit-mask: url("/static/icons/left_panel_btn.svg") center / contain
+    no-repeat;
+  mask: url("/static/icons/left_panel_btn.svg") center / contain no-repeat;
   width: 3.8rem;
   height: 3.8rem;
   z-index: 1000;
@@ -248,7 +249,6 @@ li {
 }
 
 .panel.active .session {
-  opacity: 1;
   transition: opacity 0.2s ease-in 0.2s;
   visibility: visible;
   pointer-events: auto;
@@ -294,22 +294,18 @@ li {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
   background-color: var(--icons); /* Цвет иконки */
-  -webkit-mask: url("/icons/send_btn.svg") center / contain no-repeat;
-  mask: url("/icons/send_btn.svg") center / contain no-repeat;
+  -webkit-mask: url("/static/icons/send_btn.svg") center / contain no-repeat;
+  mask: url("/static/icons/send_btn.svg") center / contain no-repeat;
   margin-top: 0.6rem;
   width: 3rem;
   height: 3rem;
   z-index: 400;
-  cursor: pointer;
-  /*   border: none; */
   transition: all 0.3s;
   transform: translateX(-4.7rem) !important; /* Смещение вправо на 20px */
 }
 
 .request-btn:hover {
-  transform: scale(1.26);
   background-color: var(--hover); /* Цвет иконки */
 }
 .request-btn:active {
@@ -319,8 +315,8 @@ li {
 
 .mic-btn {
   background-color: var(--icons); /* Цвет иконки */
-  -webkit-mask: url("/icons/mic_btn.svg") center / contain no-repeat;
-  mask: url("/icons/mic_btn.svg") center / contain no-repeat;
+  -webkit-mask: url("/static/icons/mic_btn.svg") center / contain no-repeat;
+  mask: url("/static/icons/mic_btn.svg") center / contain no-repeat;
   margin-top: 0.6rem;
   width: 3rem;
   height: 3rem;
@@ -351,6 +347,11 @@ li {
   resize: none;
   overflow-y: auto; /* Включаем вертикальный скролл */
   opacity: 0.8;
+}
+@-moz-document url-prefix() {
+  .request__input {
+    padding-left: 1rem;
+  }
 }
 
 .request__input:focus {
@@ -428,8 +429,8 @@ li {
   width: 4rem;
   height: 4rem;
   background-color: var(--icons); /* Цвет иконки */
-  -webkit-mask: url("/logos/logo2.png") center / contain no-repeat;
-  mask: url("/logos/logo2.png") center / contain no-repeat;
+  -webkit-mask: url("/static/logos/logo2.png") center / contain no-repeat;
+  mask: url("/static/logos/logo2.png") center / contain no-repeat;
   border: none;
   cursor: pointer;
   transition: all 0.3s;

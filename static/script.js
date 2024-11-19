@@ -305,7 +305,7 @@ userInput.addEventListener("keydown", function (event) {
   }
 });
 
-const audioRec = new Audio("audio/recording.mp3");
+const audioRec = new Audio("/static/audio/recording.mp3");
 const btnChatPanel = document.querySelector(".btn-chat-panel");
 const btnNewChat = document.querySelector(".btn-new-chat-panel");
 const btnDelChat = document.querySelector(".btn-del-chat-panel");
@@ -546,5 +546,6 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     console.log("Запись завершена");
   });
 } else {
-  console.error("Web Speech API не поддерживается вашим браузером.");
+  micBtn.style.display = "none";
+  /*   console.error("Web Speech API не поддерживается вашим браузером."); */
 }
