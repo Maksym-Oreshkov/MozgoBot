@@ -370,22 +370,29 @@ runOnMobile();
 window.addEventListener("resize", runOnMobile);
 
 //// Темная тема и ее созранение при обнове /////
+
 const savedTheme = localStorage.getItem("theme");
+const themeToggle = document.getElementById("theme-toggle");
 
 if (savedTheme === "dark") {
-  document.body.classList.add("dark-theme");
+  document.body.classList.add("dark-mode");
+} else {
+  document.body.classList.remove("dark-mode");
 }
 
-logoeBtn.addEventListener("click", function () {
-  document.body.classList.toggle("dark-theme");
+themeToggle.addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
 
-  // Save the current theme to localStorage
-  if (document.body.classList.contains("dark-theme")) {
+  if (document.body.classList.contains("dark-mode")) {
     localStorage.setItem("theme", "dark");
   } else {
     localStorage.setItem("theme", "light");
   }
 });
+
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+}
 
 /////// Новый чат /////////
 

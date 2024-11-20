@@ -22,7 +22,7 @@
   --hover: #706156;
 }
 
-.dark-theme {
+.dark-mode {
   /* Темная тема */
   --background-color: #1e1e1e;
   --primary-color: #6c4f2a;
@@ -145,9 +145,8 @@ textarea {
   font-size: 1.4rem;
   font-weight: 700;
   padding: 1rem;
-  border: none; /* Убираем границы со всех сторон */
-  /*   border-top: 0.2rem solid var(--assistant-message); */
-  box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color);
+  /*   border: none; 
+  box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color); */
   cursor: pointer;
   transition: all 0.3s;
   text-align: center; /* Выравнивание текста по центру */
@@ -183,13 +182,12 @@ p {
   display: flex;
   flex-direction: column;
   /*   padding: 2rem 1rem 2rem 1rem; */
-  box-shadow: inset -0.3px 0 0 0 var(--dark-text-color); /* Внутренняя граница */
+  box-shadow: inset -0.3px 0 0 0 var(--dark-text-color);
   height: 100%;
   width: 0%; /* Изначально скрыто */
   overflow-x: hidden;
   transition: 0.5s;
   background-color: var(--panel-color);
-  /*   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.6); */
   opacity: 0.8;
   transition: all 0.4s;
   z-index: 299;
@@ -443,17 +441,41 @@ li {
   -webkit-mask: url("/static/logos/logo2.png") center / contain no-repeat;
   mask: url("/static/logos/logo2.png") center / contain no-repeat;
   border: none;
+}
+
+#theme-toggle {
+  background: var(--icons);
+  border-radius: 3rem;
+  width: 3rem;
+  height: 3rem;
+  border: none;
   cursor: pointer;
+  font-size: 24px;
   transition: all 0.3s;
 }
 
-.logo:hover {
-  background-color: var(--hover); /* Цвет иконки */
-  transform: scale(1.08);
+#theme-icon {
+  display: inline-block;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
-.logo:active {
-  color: var(--secondary-color);
+#theme-toggle:hover {
+  transform: scale(1.28);
+}
+#theme-toggle:active {
   transform: scale(0.96);
+}
+
+#theme-icon::before {
+  content: "☀️"; /* Иконка солнца */
+  display: block;
+}
+
+.dark-mode #theme-icon {
+  transform: rotate(360deg);
+}
+
+.dark-mode #theme-icon::before {
+  content: "🌜"; /* Иконка луны */
 }
 
 @media (max-width: 1024px) {
