@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 * {
   box-sizing: border-box;
@@ -11,7 +12,7 @@
   --background-color: #d8d8d8;
   --primary-color: #dab576;
   --secondary-color: #e3c796;
-  --panel-color: #bcbdc1;
+  --panel-color: #c1c1c1;
   --input-color: #ecedf0;
   --light-text-color: #ddd9d9;
   --dark-text-color: #1e1e1e;
@@ -56,7 +57,7 @@ html {
 
 body {
   background: var(--background-color);
-  font-family: "Roboto";
+  font-family: "Rubik";
   height: 100%;
 }
 
@@ -74,7 +75,7 @@ h4 {
 }
 
 textarea {
-  font-family: "roboto";
+  font-family: "rubik";
   color: var(--input-text-clor);
 }
 
@@ -104,14 +105,14 @@ textarea {
   -webkit-mask: url("/static/icons/left_panel_btn.svg") center / contain
     no-repeat;
   mask: url("/static/icons/left_panel_btn.svg") center / contain no-repeat;
-  width: 3.8rem;
-  height: 3.8rem;
+  width: 3rem;
+  height: 3rem;
   z-index: 1000;
   cursor: pointer;
   transition: all 0.3s;
 }
 .btn-chat-panel:hover {
-  transform: scale(1.26);
+  transform: scale(1.08);
   background-color: var(--hover); /* Цвет иконки */
 }
 .btn-chat-panel:active {
@@ -144,9 +145,11 @@ textarea {
   font-size: 1.6rem;
   font-weight: 700;
   padding: 1rem;
+  border: none; /* Убираем границы со всех сторон */
+  /*   border-top: 0.2rem solid var(--assistant-message); */
+  box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color);
   cursor: pointer;
   transition: all 0.3s;
-  background-color: var(--assistant-message);
   text-align: center; /* Выравнивание текста по центру */
 }
 
@@ -180,18 +183,21 @@ p {
   display: flex;
   flex-direction: column;
   /*   padding: 2rem 1rem 2rem 1rem; */
+  box-shadow: inset -0.3px 0 0 0 var(--dark-text-color); /* Внутренняя граница */
   height: 100%;
   width: 0%; /* Изначально скрыто */
   overflow-x: hidden;
   transition: 0.5s;
   background-color: var(--panel-color);
-  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.6);
+  /*   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.6); */
   opacity: 0.8;
-  transition: all 0.5s;
+  transition: all 0.4s;
   z-index: 299;
 }
 
 .chat-session ul {
+  display: flex;
+  flex-direction: column-reverse;
   list-style: none;
   padding: 0;
   width: 100%;
@@ -275,7 +281,7 @@ li {
   position: sticky;
   top: 92%;
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 0.5s ease;
 }
 
 .request-panel.visible {
@@ -338,11 +344,12 @@ li {
   padding: 1rem 5rem;
   font-size: 1.8rem;
   width: 70%;
+  height: auto;
   max-height: 10rem;
   border-radius: 2rem;
   margin-right: 1rem;
   background-color: var(--input-color);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 0 0.3px var(--dark-text-color); /* Внутренняя граница */
   transition: all 0.3s;
   resize: none;
   overflow-y: auto; /* Включаем вертикальный скролл */
@@ -419,15 +426,15 @@ li {
   font-family: "Julius Sans One", sans-serif;
   text-align: start;
   letter-spacing: -0.3rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
   color: var(--icons);
   cursor: default;
   gap: 1rem;
 }
 
 .logo {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   background-color: var(--icons); /* Цвет иконки */
   -webkit-mask: url("/static/logos/logo2.png") center / contain no-repeat;
   mask: url("/static/logos/logo2.png") center / contain no-repeat;
@@ -438,7 +445,7 @@ li {
 
 .logo:hover {
   background-color: var(--hover); /* Цвет иконки */
-  transform: scale(1.26);
+  transform: scale(1.08);
 }
 .logo:active {
   color: var(--secondary-color);
