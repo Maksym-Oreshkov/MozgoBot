@@ -4,38 +4,50 @@
 let chats = [];
 let currentChatIndex = null;
 
+// Получение элементов DOM
 const chatContainer = document.getElementById("chatContainer");
 const chatList = document.getElementById("chatList");
 const userInput = document.getElementById("userInput");
 const welcomeMessage = document.querySelector(".welcome-message");
+const sendMessageBtn = document.getElementById("sendMessageBtn");
+const requestPanel = document.querySelector(".request-panel");
+const textarea = document.querySelector(".request__input");
+const micBtn = document.getElementById("micBtn");
+const audioRec = new Audio("/static/audio/recording.mp3");
+const btnChatPanel = document.querySelector(".btn-chat-panel");
+const btnNewChat = document.querySelector(".btn-new-chat-panel");
+const btnDelChat = document.querySelector(".btn-del-chat-panel");
+const panels = document.querySelectorAll(".panel");
+const themeToggle = document.getElementById("theme-toggle");
+const scrollButton = document.createElement("scroll");
+document.body.appendChild(scrollButton);
 
+// Функции работы с localStorage
 function setLocalStorage() {
   localStorage.setItem("chats", JSON.stringify(chats));
 }
 
 function getLocalStorage() {
   const data = localStorage.getItem("chats");
-  chats = data ? JSON.parse(data) : []; // Загружаем чаты или создаем пустой массив, если данных нет
-  updateChatList(); // Обновляем интерфейс с загруженными данными
+  chats = data ? JSON.parse(data) : [];
+  updateChatList();
 }
 
 // Вспомогательная функция для сокращения длинных сообщений
 function getShortenedContent(content, maxLength = 25) {
-  if (content.length > maxLength) {
-    return content.slice(0, maxLength) + "..."; // Обрезаем и добавляем многоточие
-  }
-  return content; // Возвращаем полное сообщение, если оно короткое
+  return content.length > maxLength
+    ? content.slice(0, maxLength) + "..."
+    : content;
 }
 
 // Обновляем список чатов в левой колонке
 function updateChatList() {
-  chatList.innerHTML = ""; // Очищаем старый список чатов
-
+  chatList.innerHTML = "";
   chats.forEach((chat, index) => {
     const newChatItem = document.createElement("li");
     const firstMessageContent = chat.messages[0]?.content || "Пустой чат";
-    newChatItem.textContent = getShortenedContent(firstMessageContent); // Сокращаем сообщение
-    newChatItem.addEventListener("click", () => loadChat(index)); // При нажатии загружаем выбранный чат
+    newChatItem.textContent = getShortenedContent(firstMessageContent);
+    newChatItem.addEventListener("click", () => loadChat(index));
     chatList.appendChild(newChatItem);
   });
 }
@@ -44,150 +56,125 @@ function updateChatList() {
 function loadChat(index) {
   currentChatIndex = index;
   const chat = chats[index];
-
-  // Очищаем текущее содержимое чата
   chatContainer.innerHTML = "";
 
+  if (welcomeMessage) {
+    welcomeMessage.style.display = "none";
+  }
+  requestPanel.classList.remove("welcome");
+  requestPanel.classList.add("visible");
+  runOnMobile();
+
   chat.messages.forEach((msg) => {
-    requestPanel.classList.remove("welcome");
-    requestPanel.classList.add("visible");
-    runOnMobile();
-    // Скрываем приветственное сообщение
-    if (welcomeMessage) {
-      welcomeMessage.style.display = "none";
-    }
     const messageElement = document.createElement("div");
-    // Добавляем стили в зависимости от роли сообщения (user или assistant)
-    if (msg.role === "user") {
-      messageElement.classList.add("user-message");
-      messageElement.textContent = `${msg.content}`;
-    } else {
-      messageElement.classList.add("assistant-message");
-      messageElement.textContent = `${msg.content}`;
-    }
+    messageElement.classList.add(
+      msg.role === "user" ? "user-message" : "assistant-message"
+    );
+    messageElement.textContent = msg.content;
     chatContainer.appendChild(messageElement);
   });
 
-  chatContainer.scrollTop = chatContainer.scrollHeight; // Прокручиваем чат вниз
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 // Сохраняем новый чат в массив и обновляем интерфейс
 function saveChat(firstMessage) {
   const chatIndex = chats.length;
-  // Создаем новый чат с первым сообщением пользователя
   chats.push({
     messages: [{ role: "user", content: firstMessage }],
   });
 
-  // Добавляем новый элемент в список чатов в левой колонке
   const newChatItem = document.createElement("li");
   newChatItem.textContent = getShortenedContent(firstMessage);
-  newChatItem.textContent = getShortenedContent(firstMessage); // Сокращаем сообщение
-  newChatItem.addEventListener("click", () => loadChat(chatIndex)); // При нажатии загружаем чат
+  newChatItem.addEventListener("click", () => loadChat(chatIndex));
   chatList.appendChild(newChatItem);
 
-  setLocalStorage(); // Сохраняем локально
+  setLocalStorage();
 }
-
-let shouldAutoScroll = true; // По умолчанию включаем автопрокрутку, если нужно
-const scrollButton = document.createElement("scroll");
-
-document.body.appendChild(scrollButton);
 
 // Функция для отправки сообщения и получения ответа от AI
 async function sendMessage() {
-  const userInputValue = userInput.value.trim(); // Получаем сообщение пользователя
-
-  if (!userInputValue) return; // Если сообщение пустое, ничего не делаем
-  // Скрыть приветственное сообщение
+  const userInputValue = userInput.value.trim();
+  if (!userInputValue) return;
 
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
   }
-
-  if (requestPanel.classList.contains("welcome")) {
-    requestPanel.classList.remove("welcome");
-  }
-
+  requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
 
   if (currentChatIndex === null) {
-    // Если это новый чат, сохраняем его с первым сообщением
     saveChat(userInputValue);
-
-    currentChatIndex = chats.length - 1; // Устанавливаем текущий активный чат
+    currentChatIndex = chats.length - 1;
   } else {
-    // Добавляем сообщение в существующий чат
     chats[currentChatIndex].messages.push({
       role: "user",
       content: userInputValue,
     });
   }
 
-  // Сохраняем в localStorage
   setLocalStorage();
 
   textarea.value = "";
-  textarea.style.height = "auto"; // Возвращаем строку в исходный вид!
+  textarea.style.height = "auto";
+
   const userMessage = document.createElement("div");
   userMessage.classList.add("user-message");
-  userMessage.textContent = `${userInputValue}`;
+  userMessage.textContent = userInputValue;
   chatContainer.appendChild(userMessage);
 
   userInput.value = "";
 
-  // Прокручиваем вниз только если автопрокрутка включена
   if (shouldAutoScroll) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
-  // Подготовим данные для API
+
   const systemPrompt = [
     {
       role: "system",
       content: CONFIG.systemPrompt,
-    }, // Добавляем system prompt
-    ...chats[currentChatIndex].messages, // Добавляем сообщения пользователя и ассистента
+    },
+    ...chats[currentChatIndex].messages,
   ];
 
-  // Объявляем переменную для отображения ответа
-  let assistantMessageElement = document.createElement("div");
+  const configApp = [];
+
+  const assistantMessageElement = document.createElement("div");
   assistantMessageElement.classList.add("assistant-message");
   chatContainer.appendChild(assistantMessageElement);
 
-  // Прокручиваем вниз только если автопрокрутка включена
   if (shouldAutoScroll) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
-  // Формируем полный URL, комбинируя базовый URL и путь
   const apiUrl = `${CONFIG.apiUrl}/v1/chat/completions`;
 
-  // Отправляем запрос к API OpenAI для получения ответа
   try {
     const response = await fetch(apiUrl, {
-      // Используем CONFIG.apiUrl
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: CONFIG.model, // Используем CONFIG.model
-        messages: systemPrompt, // Используем массив с system prompt
-        temperature: CONFIG.temperature, // Используем CONFIG.temperature
-        max_tokens: CONFIG.max_tokens, // Используем CONFIG.max_tokens
+        model: CONFIG.model,
+        messages: systemPrompt,
+        temperature: CONFIG.temperature,
         stream: true,
       }),
     });
 
     if (!response.ok) {
-      if (response.status === 401) {
-        alert("Ошибка: Вы не авторизованы. Проверьте API ключ.");
-      } else if (response.status === 403) {
-        alert(
-          "Ошибка: Оплаченный период истек. Проверьте подписку на OpenAI API."
-        );
-      } else {
-        alert(`Ошибка HTTP: ${response.status}`);
+      switch (response.status) {
+        case 401:
+          alert("Ошибка: Вы не авторизованы. Проверьте API ключ.");
+          break;
+        case 403:
+          alert(
+            "Ошибка: Оплаченный период истек. Проверьте подписку на OpenAI API."
+          );
+          break;
+        default:
+          alert(`Ошибка HTTP: ${response.status}`);
       }
       return;
     }
@@ -195,7 +182,7 @@ async function sendMessage() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let assistantMessage = "";
-    let buffer = ""; // Буфер для хранения неполных данных
+    let buffer = "";
     let doneReading = false;
 
     while (!doneReading) {
@@ -203,16 +190,12 @@ async function sendMessage() {
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
-
       let lines = buffer.split("\n");
-
-      // Оставляем последнюю (возможно, неполную) строку в буфере
       buffer = lines.pop();
 
       for (const line of lines) {
         if (line.trim().startsWith("data: ")) {
           const jsonString = line.replace("data: ", "").trim();
-
           if (jsonString === "[DONE]") {
             doneReading = true;
             break;
@@ -222,9 +205,8 @@ async function sendMessage() {
             const parsedData = JSON.parse(jsonString);
             const content = parsedData.choices[0].delta?.content || "";
             assistantMessage += content;
-            // Обновляем отображение сообщения ассистента
-            assistantMessageElement.innerHTML = `${assistantMessage}`;
-            // Прокручиваем вниз, если автопрокрутка включена
+            assistantMessageElement.innerHTML = assistantMessage;
+
             if (shouldAutoScroll) {
               chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -239,14 +221,14 @@ async function sendMessage() {
         }
       }
     }
-    // После завершения чтения, проверяем оставшийся буфер
+
     if (buffer.trim() && buffer.trim() !== "[DONE]") {
       try {
         const jsonString = buffer.replace("data: ", "").trim();
         const parsedData = JSON.parse(jsonString);
         const content = parsedData.choices[0].delta?.content || "";
         assistantMessage += content;
-        assistantMessageElement.innerHTML = `${assistantMessage}`;
+        assistantMessageElement.innerHTML = assistantMessage;
       } catch (error) {
         console.error(
           "Ошибка при разборе JSON в оставшемся буфере:",
@@ -256,110 +238,80 @@ async function sendMessage() {
         );
       }
     }
-    // Добавляем сообщение AI в текущий чат
+
     chats[currentChatIndex].messages.push({
       role: "assistant",
       content: assistantMessage,
     });
 
-    // Сохраняем обновлённый чат в localStorage
     setLocalStorage();
   } catch (error) {
-    console.error(
-      "Ошибка при разборе JSON:",
-      error,
-      "Строка JSON:",
-      jsonString
-    );
+    console.error("Ошибка при получении ответа от сервера:", error);
     alert("Ошибка: Невозможно обработать ответ от сервера.");
   }
 }
 
 // Функция для отслеживания ручной прокрутки
+let shouldAutoScroll = true;
 chatContainer.addEventListener("scroll", () => {
   const isAtBottom =
     chatContainer.scrollTop + chatContainer.clientHeight >=
     chatContainer.scrollHeight - 10;
   if (!isAtBottom) {
     shouldAutoScroll = false;
-    scrollButton.style.display = "block"; // Показываем кнопку для включения автопрокрутки
+    scrollButton.style.display = "block";
   } else {
     shouldAutoScroll = true;
-    scrollButton.style.display = "none"; // Скрываем кнопку, если прокрутка внизу
+    scrollButton.style.display = "none";
   }
 });
 
 // Функция для включения автопрокрутки по клику на кнопку
 scrollButton.addEventListener("click", () => {
   shouldAutoScroll = true;
-  chatContainer.scrollTop = chatContainer.scrollHeight; // Прокручиваем вниз
-  scrollButton.style.display = "none"; // Скрываем кнопку
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+  scrollButton.style.display = "none";
 });
 
 // Отправка сообщения при нажатии кнопки "Отправить"
-document
-  .getElementById("sendMessageBtn")
-  .addEventListener("click", sendMessage);
+sendMessageBtn.addEventListener("click", sendMessage);
 
 // Отправка сообщения при нажатии клавиши Enter
 userInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    event.preventDefault(); // Предотвращаем переход на новую строку
-    sendMessage(); // Отправляем сообщение
+    event.preventDefault();
+    sendMessage();
   }
 });
-
-const audioRec = new Audio("/static/audio/recording.mp3");
-const btnChatPanel = document.querySelector(".btn-chat-panel");
-const btnNewChat = document.querySelector(".btn-new-chat-panel");
-const btnDelChat = document.querySelector(".btn-del-chat-panel");
-const panels = document.querySelectorAll(".panel");
-const logoeBtn = document.querySelector(".logo");
-const textarea = document.querySelector(".request__input");
-const requestPanel = document.querySelector(".request-panel");
-const micBtn = document.getElementById("micBtn");
-
-// Функция для удаления класса "active" у всех панелей
-function removeActivePanel() {
-  panels.forEach((panel) => {
-    panel.classList.remove("active");
-  });
-}
-
-// Функция для активации всех панелей
-function activateActivePanel() {
-  panels.forEach((panel) => {
-    panel.classList.add("active");
-  });
-}
-
-// Функция для проверки мобильного разрешения
-function isMobile() {
-  return window.matchMedia("(max-width: 480px)").matches;
-}
 
 // Функция для управления состоянием панели
 function runOnMobile() {
   if (isMobile()) {
-    // Если мобильное разрешение, скрываем панель
     removeActivePanel();
   } else {
-    // Если не мобильное разрешение, активируем панель с задержкой
-    setTimeout(function () {
-      activateActivePanel();
-    }, 2000); // 2 секунды задержки
+    setTimeout(activateActivePanel, 2000);
   }
+}
+
+// Проверка мобильного разрешения
+function isMobile() {
+  return window.matchMedia("(max-width: 480px)").matches;
+}
+
+// Функция для удаления класса "active" у всех панелей
+function removeActivePanel() {
+  panels.forEach((panel) => panel.classList.remove("active"));
+}
+
+// Функция для активации всех панелей
+function activateActivePanel() {
+  panels.forEach((panel) => panel.classList.add("active"));
 }
 
 // Обработчик клика для переключения панели
 btnChatPanel.addEventListener("click", function () {
   panels.forEach((panel) => {
-    if (panel.classList.contains("active")) {
-      panel.classList.remove("active");
-    } else {
-      removeActivePanel();
-      panel.classList.add("active");
-    }
+    panel.classList.toggle("active");
   });
 });
 
@@ -369,11 +321,8 @@ runOnMobile();
 // Слушаем изменение размеров экрана и пересчитываем состояние
 window.addEventListener("resize", runOnMobile);
 
-//// Темная тема и ее созранение при обнове /////
-
+// Темная тема и ее сохранение при обновлении
 const savedTheme = localStorage.getItem("theme");
-const themeToggle = document.getElementById("theme-toggle");
-
 if (savedTheme === "dark") {
   document.body.classList.add("dark-mode");
 } else {
@@ -382,76 +331,50 @@ if (savedTheme === "dark") {
 
 themeToggle.addEventListener("click", function () {
   document.body.classList.toggle("dark-mode");
-
-  if (document.body.classList.contains("dark-mode")) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark-mode") ? "dark" : "light"
+  );
 });
 
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-}
-
-/////// Новый чат /////////
-
+// Новый чат
 btnNewChat.addEventListener("click", function () {
-  // Очистить панель чата
   chatContainer.innerHTML = "";
-
-  // Сбросить индекс текущего чата
   currentChatIndex = null;
-
-  // Обновить интерфейс
   updateChatList();
-
-  // Очищаем поле ввода
   userInput.value = "";
-
-  requestPanel.classList.remove("welcome");
-  requestPanel.classList.add("visible");
-  runOnMobile();
-  // Скрываем приветственное сообщение
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
   }
+  requestPanel.classList.remove("welcome");
+  requestPanel.classList.add("visible");
+  runOnMobile();
 });
 
-/////// Очищаем историю чатов /////////
-
+// Очищаем историю чатов
 btnDelChat.addEventListener("click", function () {
-  // Очищаем массив чатов
   chats = [];
-
-  // Сбрасываем текущий индекс чата
   currentChatIndex = null;
-
-  // Очищаем интерфейс: список чатов и окно чата
   chatList.innerHTML = "";
   chatContainer.innerHTML = "";
-
-  // Сохраняем пустой массив в localStorage
   setLocalStorage();
 });
 
-////////////// Строка запроса /////////////////
+// Автоматическое изменение высоты текстового поля
 textarea.addEventListener("input", function () {
-  this.style.height = "auto"; // Сбрасываем высоту
-  this.style.height = this.scrollHeight + "px"; // Устанавливаем новую высоту по контенту
-
-  // Проверяем, превышает ли высота max-height
-  if (this.scrollHeight > parseInt(getComputedStyle(this).maxHeight)) {
-    this.style.overflowY = "auto"; // Включаем скролл, если текста слишком много
-  } else {
-    this.style.overflowY = "hidden"; // Убираем скролл, если текста достаточно мало
-  }
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+  this.style.overflowY =
+    this.scrollHeight > parseInt(getComputedStyle(this).maxHeight)
+      ? "auto"
+      : "hidden";
 });
+
 // Отправка сообщения при нажатии "Enter"
 textarea.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    event.preventDefault(); // Предотвращаем переход на новую строку
-    sendMessage(); // Вызываем функцию отправки сообщения
+    event.preventDefault();
+    sendMessage();
   }
 });
 
@@ -459,24 +382,21 @@ document.addEventListener("DOMContentLoaded", function () {
   getLocalStorage();
   showWelcomeMessage();
 
-  // Задержка перед появлением request-panel
   setTimeout(function () {
     requestPanel.classList.add("visible");
-  }, 1000); // 1 секунды задержки
+  }, 1000);
 });
 
-//// Приветствие //////
-
-function typeWritter(elem, text, speed) {
+// Приветствие
+function typeWriter(elem, text, speed) {
   let i = 0;
-  function typing() {
+  (function typing() {
     if (i < text.length) {
       elem.innerHTML += text.charAt(i);
       i++;
       setTimeout(typing, speed);
     }
-  }
-  typing();
+  })();
 }
 
 function showWelcomeMessage() {
@@ -492,37 +412,25 @@ function showWelcomeMessage() {
 
   const welcomeText = "Привет! Я – МозгоБот. Чем могу помочь?";
   setTimeout(function () {
-    typeWritter(welcomeMessage, welcomeText, 10);
+    typeWriter(welcomeMessage, welcomeText, 10);
   }, 2000);
 }
 
-/////////// Голосовой ввод строки через микрофон /////////////////
-
-// Проверяем поддержку Web Speech API
+// Голосовой ввод через микрофон
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
 
-  // Настройки распознавания
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
-  // Список поддерживаемых языков (русский и английский)
-  const languages = ["ru-RU", "en-US"]; // Можно добавить больше языков
+  const languages = ["ru-RU", "en-US"];
   let currentLangIndex = 0;
 
-  // Функция для начала распознавания
-  function startRecognition(lang) {
-    recognition.lang = lang;
-    recognition.start();
-    console.log(`Распознавание запущено на языке: ${lang}`);
-  }
-
-  // Событие нажатия на микрофон
   micBtn.addEventListener("click", () => {
     audioRec.play();
-    currentLangIndex = 0; // Сбрасываем на первый язык
+    currentLangIndex = 0;
     startRecognition(languages[currentLangIndex]);
     micBtn.classList.add("recording");
     recognition.addEventListener("end", () => {
@@ -530,16 +438,20 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     });
   });
 
-  // Обработка успешного распознавания
+  function startRecognition(lang) {
+    recognition.lang = lang;
+    recognition.start();
+    console.log(`Распознавание запущено на языке: ${lang}`);
+  }
+
   recognition.addEventListener("result", (event) => {
     const transcript = event.results[0][0].transcript;
     console.log(`Распознанный текст: ${transcript}`);
-    userInput.value = transcript; // Вставляем распознанный текст в поле
+    userInput.value = transcript;
   });
 
-  // Попытка следующего языка при ошибке
   recognition.addEventListener("error", (event) => {
-    if (event.error === "no-speech" || event.error === "nomatch") {
+    if (["no-speech", "nomatch"].includes(event.error)) {
       console.log(`Ошибка распознавания на языке: ${recognition.lang}`);
       currentLangIndex++;
       if (currentLangIndex < languages.length) {
@@ -552,11 +464,9 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     }
   });
 
-  // Событие завершения записи (если не было ошибок)
   recognition.addEventListener("end", () => {
     console.log("Запись завершена");
   });
 } else {
   micBtn.style.display = "none";
-  /*   console.error("Web Speech API не поддерживается вашим браузером."); */
 }

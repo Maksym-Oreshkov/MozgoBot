@@ -145,8 +145,8 @@ textarea {
   font-size: 1.4rem;
   font-weight: 700;
   padding: 1rem;
-  /*   border: none; 
-  box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color); */
+  border: none;
+  box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color);
   cursor: pointer;
   transition: all 0.3s;
   text-align: center; /* Выравнивание текста по центру */
@@ -262,7 +262,7 @@ li {
 .welcome-message {
   position: sticky;
   top: 40%;
-  padding-left: 15%;
+  padding-left: 17%;
   width: 100%;
   transform: translateY(-50%);
   text-align: left;
@@ -437,7 +437,7 @@ li {
 .logo {
   width: 3rem;
   height: 3rem;
-  background-color: var(--icons); /* Цвет иконки */
+  background-color: var(--icons);
   -webkit-mask: url("/static/logos/logo2.png") center / contain no-repeat;
   mask: url("/static/logos/logo2.png") center / contain no-repeat;
   border: none;
