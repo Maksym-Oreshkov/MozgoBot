@@ -219,7 +219,9 @@ async function sendMessage() {
       for (const line of lines) {
         if (line.trim().startsWith("data: ")) {
           const jsonString = line.replace("data: ", "").trim();
-          if (jsonString === "[DONE]") return;
+          if (jsonString === "[DONE]") {
+            break; // Заменяем return на break
+          }
 
           try {
             const parsedData = JSON.parse(jsonString);
@@ -249,6 +251,13 @@ async function sendMessage() {
         const content = parsedData.choices[0].delta?.content || "";
         assistantMessage += content;
         assistantMessageElement.innerHTML = assistantMessage;
+
+        // Сохраняем оставшиеся данные
+        chats[currentChatIndex].messages.push({
+          role: "assistant",
+          content: assistantMessage,
+        });
+        setLocalStorage();
       } catch (error) {
         console.error(
           "Ошибка при разборе JSON в оставшемся буфере:",
@@ -268,10 +277,9 @@ async function sendMessage() {
   } catch (error) {
     if (error.name === "AbortError") {
       console.log("Запрос был прерван пользователем.");
-      // Сохраняем текущий ответ даже после остановки
       chats[currentChatIndex].messages.push({
         role: "assistant",
-        content: assistantMessageElement.innerHTML || "",
+        content: assistantMessageElement.innerHTML || assistantMessage,
       });
       setLocalStorage();
     } else {
