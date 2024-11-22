@@ -22,6 +22,9 @@ const themeToggle = document.getElementById("theme-toggle");
 const scrollButton = document.createElement("scroll");
 document.body.appendChild(scrollButton);
 
+// AbortController для возможности отмены запроса
+let abortController = null;
+
 // Функции работы с localStorage
 function setLocalStorage() {
   localStorage.setItem("chats", JSON.stringify(chats));
@@ -92,6 +95,20 @@ function saveChat(firstMessage) {
   setLocalStorage();
 }
 
+//  Функция для изменения состояния кнопки отправки
+function toggleSendButton(isSending) {
+  if (isSending) {
+    sendMessageBtn.classList.add("stop-button"); // Добавляем класс для стилизации как стоп
+    sendMessageBtn.title = "Остановить запрос";
+    // Можно изменить иконку кнопки здесь, если используется иконка
+  } else {
+    sendMessageBtn.disabled = false;
+    sendMessageBtn.classList.remove("stop-button");
+    sendMessageBtn.title = "Отправить сообщение";
+    // Восстанавливаем иконку кнопки отправки
+  }
+}
+
 // Функция для отправки сообщения и получения ответа от AI
 async function sendMessage() {
   const userInputValue = userInput.value.trim();
@@ -149,6 +166,13 @@ async function sendMessage() {
 
   const apiUrl = `${CONFIG.apiUrl}/v1/chat/completions`;
 
+  // Инициализируем AbortController
+  abortController = new AbortController();
+  const { signal } = abortController;
+
+  // Меняем кнопку отправки на стоп
+  toggleSendButton(true);
+
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -159,8 +183,10 @@ async function sendMessage() {
         model: CONFIG.model,
         messages: systemPrompt,
         temperature: CONFIG.temperature,
+        max_tokens: CONFIG.max_tokens,
         stream: true,
       }),
+      signal, // Передаём сигнал для возможности отмены
     });
 
     if (!response.ok) {
@@ -246,10 +272,36 @@ async function sendMessage() {
 
     setLocalStorage();
   } catch (error) {
-    console.error("Ошибка при получении ответа от сервера:", error);
-    alert("Ошибка: Невозможно обработать ответ от сервера.");
+    if (error.name === "AbortError") {
+      console.log("Запрос был прерван пользователем.");
+    } else {
+      console.error("Ошибка при получении ответа от сервера:", error);
+      alert("Ошибка: Невозможно обработать ответ от сервера.");
+    }
+  } finally {
+    // Восстанавливаем кнопку отправки
+    toggleSendButton(false);
+    abortController = null;
   }
 }
+
+// Функция для остановки запроса
+function stopMessage() {
+  if (abortController) {
+    abortController.abort();
+  }
+}
+
+// Обработчик клика для кнопки отправки/остановки
+sendMessageBtn.addEventListener("click", () => {
+  if (abortController) {
+    // Если запрос уже отправлен, остановить его
+    stopMessage();
+  } else {
+    // Отправить сообщение
+    sendMessage();
+  }
+});
 
 // Функция для отслеживания ручной прокрутки
 let shouldAutoScroll = true;
@@ -281,6 +333,8 @@ userInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
     sendMessage();
+  } else {
+    stopMessage();
   }
 });
 
@@ -368,14 +422,6 @@ textarea.addEventListener("input", function () {
     this.scrollHeight > parseInt(getComputedStyle(this).maxHeight)
       ? "auto"
       : "hidden";
-});
-
-// Отправка сообщения при нажатии "Enter"
-textarea.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    sendMessage();
-  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
