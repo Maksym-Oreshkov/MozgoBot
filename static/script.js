@@ -154,8 +154,6 @@ async function sendMessage() {
     ...chats[currentChatIndex].messages,
   ];
 
-  const configApp = [];
-
   const assistantMessageElement = document.createElement("div");
   assistantMessageElement.classList.add("assistant-message");
   chatContainer.appendChild(assistantMessageElement);
@@ -209,9 +207,8 @@ async function sendMessage() {
     const decoder = new TextDecoder();
     let assistantMessage = "";
     let buffer = "";
-    let doneReading = false;
 
-    while (!doneReading) {
+    while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
@@ -222,10 +219,7 @@ async function sendMessage() {
       for (const line of lines) {
         if (line.trim().startsWith("data: ")) {
           const jsonString = line.replace("data: ", "").trim();
-          if (jsonString === "[DONE]") {
-            doneReading = true;
-            break;
-          }
+          if (jsonString === "[DONE]") return;
 
           try {
             const parsedData = JSON.parse(jsonString);
@@ -274,12 +268,16 @@ async function sendMessage() {
   } catch (error) {
     if (error.name === "AbortError") {
       console.log("Запрос был прерван пользователем.");
+      // Сохраняем текущий ответ даже после остановки
+      chats[currentChatIndex].messages.push({
+        role: "assistant",
+        content: assistantMessageElement.innerHTML || "",
+      });
+      setLocalStorage();
     } else {
       console.error("Ошибка при получении ответа от сервера:", error);
-      alert("Ошибка: Невозможно обработать ответ от сервера.");
     }
   } finally {
-    // Восстанавливаем кнопку отправки
     toggleSendButton(false);
     abortController = null;
   }
