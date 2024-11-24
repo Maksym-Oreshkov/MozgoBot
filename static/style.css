@@ -121,9 +121,12 @@ textarea {
 }
 
 .btn-new-chat-panel {
-  margin-bottom: 2rem;
+  width: 100%;
+  text-align: start;
   text-decoration: none;
   color: var(--dark-text-color);
+  border: none;
+  box-shadow: inset 0px -0.3px 0px 0px var(--dark-text-color);
   font-size: 1.6rem;
   font-weight: 700;
   padding: 1rem;
@@ -149,7 +152,7 @@ textarea {
   box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color);
   cursor: pointer;
   transition: all 0.3s;
-  text-align: center; /* Выравнивание текста по центру */
+  text-align: start; /* Выравнивание текста по центру */
 }
 
 .btn-del-chat-panel:hover {
@@ -560,7 +563,7 @@ li {
     font-size: 2.2rem;
   }
   #chatList {
-    height: 55%;
+    max-height: 65%;
   }
   li {
     font-size: 2rem;
