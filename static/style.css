@@ -9,10 +9,10 @@
 }
 
 :root {
-  --background-color: #d8d8d8;
+  --background-color: rgb(226, 226, 226);
   --primary-color: #dab576;
   --secondary-color: #e3c796;
-  --panel-color: #dcdbd7;
+  --panel-color: #b1b1b156;
   --input-color: #ecedf0;
   --light-text-color: #ddd9d9;
   --dark-text-color: #1e1e1e;
@@ -27,7 +27,7 @@
   --background-color: #1e1e1e;
   --primary-color: #6c4f2a;
   --secondary-color: #706156;
-  --panel-color: #2e2e33;
+  --panel-color: #4a4a5855;
   --input-color: #3a3b3f;
   --light-text-color: #f5f5f5;
   --dark-text-color: #d1d1d1;
@@ -189,7 +189,8 @@ p {
   overflow-x: hidden;
   transition: 0.5s;
   background-color: var(--panel-color);
-  opacity: 0.8;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: all 0.4s;
   z-index: 299;
 }
@@ -426,7 +427,7 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 2rem 8rem 0rem 8rem;
+  padding: 2rem 2rem 0rem 8rem;
   width: 100%;
   z-index: 500;
 }
@@ -453,21 +454,23 @@ li {
 }
 
 .app-theme {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 2.3rem;
-  padding-right: 2rem;
+  position: fixed;
+  bottom: 5rem;
+  padding-left: 1rem;
 }
 
 #theme-toggle {
-  background: var(--icons);
+  display: flex;
+  align-items: start;
+  padding: 0rem 0rem 0rem 0.2rem;
+  background: var(--input-color);
+  color: var(--input-text-clor);
   border-radius: 3rem;
-  width: 3rem;
-  height: 3rem;
+  width: 8rem;
+  height: 2.5rem;
   border: none;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   transition: all 0.3s;
 }
 
@@ -476,23 +479,29 @@ li {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 #theme-toggle:hover {
-  transform: scale(1.28);
+  transform: scale(1.08);
 }
 #theme-toggle:active {
   transform: scale(0.96);
 }
 
 #theme-icon::before {
-  content: "☀️"; /* Иконка солнца */
+  content: "🌕 light"; /* Иконка солнца */
   display: block;
 }
 
 .dark-mode #theme-icon {
-  transform: rotate(360deg);
+  transform: /* rotate(360deg) */ translateX(1.2rem);
 }
 
 .dark-mode #theme-icon::before {
-  content: "🌜"; /* Иконка луны */
+  content: "dark 🌑"; /* Иконка луны */
+}
+
+@media (max-width: 1240px) {
+  .btn-del-chat-panel {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -544,11 +553,14 @@ li {
   .chat-session {
     position: absolute;
     height: 100%;
-    opacity: 0.9;
+
     z-index: 500;
   }
   .btn-new-chat-panel {
     font-size: 2.2rem;
+  }
+  #chatList {
+    height: 55%;
   }
   li {
     font-size: 2rem;
@@ -564,8 +576,9 @@ li {
     width: 100%;
   }
   .request-panel {
+    padding: 0.5rem;
     position: fixed;
-    top: 90%;
+    top: 85%;
     width: 100%;
   }
   .request__input {
