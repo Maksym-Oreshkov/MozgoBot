@@ -20,6 +20,7 @@
   --assistant-message: #e9ecef;
   --icons: #505050;
   --hover: #706156;
+  --code: #81550a;
 }
 
 .dark-mode {
@@ -35,6 +36,7 @@
   --assistant-message: #3a3b3f;
   --icons: #a9a9a9;
   --hover: #e3c796;
+  --code: #be7e0f;
 }
 
 html {
@@ -416,13 +418,56 @@ li {
   background-color: var(--assistant-message);
   color: var(--dark-text-color);
   border-radius: 15px 15px 15px 0;
-  padding: 12px 12px 12px 22px;
+  padding: 1rem 1rem 1rem 3rem;
   margin: 5px 0;
   max-width: 80%;
   word-wrap: break-word;
   opacity: 0.8;
   white-space: pre-wrap; /* Сохраняет пробелы и переносы строк */
-  margin: 10px 0; /* Отступы между сообщениями */
+  margin: 5px 0; /* Отступы между сообщениями */
+}
+
+/* Стили для Markdown */
+.assistant-message h1,
+.assistant-message h2,
+.assistant-message h3 {
+  color: var(--dark-text-color);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.assistant-message p {
+  color: var(--dark-text-color);
+  line-height: 1.6;
+}
+
+.assistant-message a {
+  color: #1a0dab;
+  text-decoration: none;
+}
+
+.assistant-message a:hover {
+  text-decoration: underline;
+}
+
+.assistant-message code {
+  color: var(--code);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.assistant-message pre {
+  background-color: var(--panel-color);
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.assistant-message blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 16px;
+  color: #666;
+  margin: 1em 0;
 }
 
 .navbar {

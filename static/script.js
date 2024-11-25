@@ -71,12 +71,22 @@ function loadChat(index) {
   chat.messages.forEach((msg) => {
     const messageElement = document.createElement("div");
     messageElement.classList.add(
-      msg.role === "user" ? "user-message" : "assistant-message"
+      msg.role === "user" ? "user-message" : "assistant-message",
+      "message"
     );
-    messageElement.textContent = msg.content;
+
+    if (msg.role === "assistant") {
+      // Преобразование Markdown в HTML для сообщений ассистента
+      messageElement.innerHTML = marked.parse(msg.content);
+    } else {
+      // Для сообщений пользователя используем textContent
+      messageElement.textContent = msg.content;
+    }
+
     chatContainer.appendChild(messageElement);
   });
 
+  // Прокрутка вниз после загрузки чата
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
@@ -218,21 +228,6 @@ async function sendMessage() {
     let assistantMessage = "";
     let buffer = "";
 
-    // Функция debounce
-    function debounce(func, delay) {
-      let timeout;
-      return function (...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), delay);
-      };
-    }
-
-    // Создайте дебаунсированную функцию для обновления сообщения ассистента
-    const updateAssistantMessage = debounce((content) => {
-      const htmlContent = marked.parse(content);
-      assistantMessageElement.innerHTML = htmlContent;
-    }, 100); // Обновление каждые 100 мс
-
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -277,8 +272,7 @@ async function sendMessage() {
         const jsonString = buffer.replace("data: ", "").trim();
         const parsedData = JSON.parse(jsonString);
         const content = parsedData.choices[0].delta?.content || "";
-        /*         assistantMessage += content; */
-        updateAssistantMessage(assistantMessage);
+        assistantMessage += content;
 
         // Обновляем HTML с использованием marked
         const htmlContent = marked.parse(assistantMessage);
