@@ -109,7 +109,6 @@ function toggleSendButton(isSending) {
   }
 }
 
-// Функция для отправки сообщения и получения ответа от AI
 async function sendMessage() {
   const userInputValue = userInput.value.trim();
   if (!userInputValue) return;
@@ -135,10 +134,16 @@ async function sendMessage() {
   textarea.value = "";
   textarea.style.height = "auto";
 
+  // Создание элемента сообщения пользователя
   const userMessage = document.createElement("div");
-  userMessage.classList.add("user-message");
+  userMessage.classList.add("user-message", "message");
   userMessage.textContent = userInputValue;
   chatContainer.appendChild(userMessage);
+
+  // Триггер анимации появления
+  setTimeout(() => {
+    userMessage.classList.add("visible");
+  }, 10); // Небольшая задержка для запуска CSS-перехода
 
   userInput.value = "";
 
@@ -154,9 +159,14 @@ async function sendMessage() {
     ...chats[currentChatIndex].messages,
   ];
 
+  // Создание элемента сообщения ассистента
   const assistantMessageElement = document.createElement("div");
-  assistantMessageElement.classList.add("assistant-message");
+  assistantMessageElement.classList.add("assistant-message", "message");
   chatContainer.appendChild(assistantMessageElement);
+
+  setTimeout(() => {
+    assistantMessageElement.classList.add("visible");
+  }, 10);
 
   if (shouldAutoScroll) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -208,6 +218,21 @@ async function sendMessage() {
     let assistantMessage = "";
     let buffer = "";
 
+    // Функция debounce
+    function debounce(func, delay) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    // Создайте дебаунсированную функцию для обновления сообщения ассистента
+    const updateAssistantMessage = debounce((content) => {
+      const htmlContent = marked.parse(content);
+      assistantMessageElement.innerHTML = htmlContent;
+    }, 100); // Обновление каждые 100 мс
+
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -227,7 +252,10 @@ async function sendMessage() {
             const parsedData = JSON.parse(jsonString);
             const content = parsedData.choices[0].delta?.content || "";
             assistantMessage += content;
-            assistantMessageElement.innerHTML = assistantMessage;
+
+            // Используем marked для преобразования Markdown в HTML
+            const htmlContent = marked.parse(assistantMessage);
+            assistantMessageElement.innerHTML = htmlContent;
 
             if (shouldAutoScroll) {
               chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -249,8 +277,12 @@ async function sendMessage() {
         const jsonString = buffer.replace("data: ", "").trim();
         const parsedData = JSON.parse(jsonString);
         const content = parsedData.choices[0].delta?.content || "";
-        assistantMessage += content;
-        assistantMessageElement.innerHTML = assistantMessage;
+        /*         assistantMessage += content; */
+        updateAssistantMessage(assistantMessage);
+
+        // Обновляем HTML с использованием marked
+        const htmlContent = marked.parse(assistantMessage);
+        assistantMessageElement.innerHTML = htmlContent;
 
         // Сохраняем оставшиеся данные
         chats[currentChatIndex].messages.push({
@@ -268,6 +300,7 @@ async function sendMessage() {
       }
     }
 
+    // Финальное сохранение сообщения
     chats[currentChatIndex].messages.push({
       role: "assistant",
       content: assistantMessage,

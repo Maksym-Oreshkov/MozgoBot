@@ -1,7 +1,7 @@
 const CONFIG = {
   apiUrl: "https://ai.mozgobot.ru",
   systemPrompt: "AAP_MozgoBot_SYSTEMPROMPT",
-  model: "mozgobot_2024-11-24_q6_k-gguf:latest",
+  model: "aya-expanse:8b-q4_K_M",
   temperature: 0.75,
   ctxNum: 8192,
   /*   maxOutputNum: 4096,
