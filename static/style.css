@@ -399,7 +399,7 @@ li {
 
 /* Сообщения пользователя */
 .user-message {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   align-self: flex-end;
   background-color: var(--secondary-color);
   color: var(--dark-text-color);
@@ -413,7 +413,7 @@ li {
 
 /* Сообщения ассистента (AI) */
 .assistant-message {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   align-self: flex-start;
   background-color: var(--assistant-message);
   color: var(--dark-text-color);
@@ -434,10 +434,14 @@ li {
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
+.assistant-message li {
+  font-size: 1.6rem;
+}
 
 .assistant-message p {
   color: var(--dark-text-color);
   line-height: 1.6;
+  font-size: 1.8rem;
 }
 
 .assistant-message a {
