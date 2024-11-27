@@ -392,7 +392,7 @@ li {
   overflow-y: auto;
   padding: 0 8rem 0 8rem;
   gap: 2rem;
-  max-height: 78%;
+  max-height: 75%;
   transition: 0.3s;
   z-index: 200;
 }
@@ -433,6 +433,8 @@ li {
   color: var(--dark-text-color);
   margin-top: 1em;
   margin-bottom: 0.5em;
+  font-size: 2.5rem;
+  font-weight: 450;
 }
 .assistant-message li {
   font-size: 1.6rem;
@@ -620,7 +622,7 @@ li {
 
   #chatContainer {
     padding: 0 1rem;
-    max-height: 70%;
+    max-height: 75%;
   }
 
   .active {
@@ -634,7 +636,6 @@ li {
   }
   .request__input {
     width: 100%;
-    max-height: 6rem;
     font-size: 1.6rem;
   }
   .welcome-message {
@@ -643,10 +644,10 @@ li {
     width: 100%;
   }
   .assistant-message {
-    max-width: 90%;
+    max-width: 100%;
   }
   .user-message {
-    max-width: 90%;
+    max-width: 80%;
   }
   .btn-del-chat-panel {
     font-size: 1.2rem;
