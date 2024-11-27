@@ -489,7 +489,7 @@ function showWelcomeMessage() {
     welcomeMessage.innerHTML = "";
   }
 
-  const welcomeText = "Привет! Я – МозгоБот. Чем могу помочь?";
+  const welcomeText = CONFIG.welcomeText;
   setTimeout(function () {
     typeWriter(welcomeMessage, welcomeText, 10);
   }, 2000);
