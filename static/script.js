@@ -20,6 +20,7 @@ const btnDelChat = document.querySelector(".btn-del-chat-panel");
 const panels = document.querySelectorAll(".panel");
 const themeToggle = document.getElementById("theme-toggle");
 const scrollButton = document.createElement("scroll");
+const mainLogoCover = document.querySelector(".main-logo-cover");
 document.body.appendChild(scrollButton);
 
 // AbortController для возможности отмены запроса
@@ -60,6 +61,7 @@ function loadChat(index) {
   currentChatIndex = index;
   const chat = chats[index];
   chatContainer.innerHTML = "";
+  mainLogoCover.classList.remove("visible");
 
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
@@ -333,6 +335,7 @@ sendMessageBtn.addEventListener("click", () => {
   } else {
     // Отправить сообщение
     sendMessage();
+    mainLogoCover.classList.remove("visible");
   }
 });
 
@@ -366,6 +369,7 @@ userInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
     sendMessage();
+    mainLogoCover.classList.remove("visible");
   } else {
     stopMessage();
   }
@@ -428,6 +432,7 @@ themeToggle.addEventListener("click", function () {
 btnNewChat.addEventListener("click", function () {
   chatContainer.innerHTML = "";
   currentChatIndex = null;
+  mainLogoCover.classList.add("visible");
   updateChatList();
   userInput.value = "";
   if (welcomeMessage) {
@@ -444,6 +449,7 @@ btnDelChat.addEventListener("click", function () {
   currentChatIndex = null;
   chatList.innerHTML = "";
   chatContainer.innerHTML = "";
+  mainLogoCover.classList.add("visible");
   setLocalStorage();
 });
 
@@ -460,9 +466,11 @@ textarea.addEventListener("input", function () {
 document.addEventListener("DOMContentLoaded", function () {
   getLocalStorage();
   showWelcomeMessage();
+  mainLogoCover.classList.add("visible");
 
   setTimeout(function () {
     requestPanel.classList.add("visible");
+    mainLogoCover.classList.remove("visible");
   }, 1000);
 });
 
