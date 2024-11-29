@@ -450,6 +450,9 @@ btnDelChat.addEventListener("click", function () {
   chatList.innerHTML = "";
   chatContainer.innerHTML = "";
   mainLogoCover.classList.add("visible");
+  requestPanel.classList.remove("welcome");
+  requestPanel.classList.add("visible");
+  welcomeMessage.style.display = "none";
   setLocalStorage();
 });
 

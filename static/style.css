@@ -178,9 +178,6 @@ p {
   font-size: 1.6rem;
 }
 
-.session-history {
-  padding: 2rem 0rem 0rem 2rem;
-}
 .chat-session {
   position: relative; /* Фиксируем панель относительно окна браузера */
   left: 0; /* Прикрепляем панель к левому краю */
@@ -436,22 +433,36 @@ li {
 }
 
 /* Стили для Markdown */
-.assistant-message h1,
-.assistant-message h2,
-.assistant-message h3 {
+.assistant-message h1 {
   color: var(--dark-text-color);
-  margin-top: 1em;
+  padding-top: 1em;
   margin-bottom: 0.5em;
   font-size: 2.5rem;
   font-weight: 450;
 }
+.assistant-message h2 {
+  color: var(--dark-text-color);
+  padding-top: 1em;
+  margin-bottom: 0.5em;
+  font-size: 2rem;
+  font-weight: 350;
+}
+.assistant-message h3 {
+  color: var(--dark-text-color);
+  padding-top: 1em;
+  margin-bottom: 0.5em;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
 .assistant-message li {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  line-height: 1.8;
+  font-weight: 400;
 }
 
 .assistant-message p {
   color: var(--dark-text-color);
-  line-height: 1.6;
+  line-height: 1.4;
   font-size: 1.8rem;
 }
 
@@ -586,7 +597,7 @@ li {
   bottom: 0;
   width: 100%;
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 @media (max-width: 1240px) {
@@ -674,14 +685,32 @@ li {
     width: 100%;
   }
   .request-panel {
-    padding: 1rem 0rem 10rem 0rem;
+    padding: 2rem 0rem 10rem 0rem;
     width: 100vw;
+  }
+  .request-panel.welcome {
+    top: 58%;
   }
   .warning {
     bottom: 7rem;
   }
   h3 {
     font-size: 1rem;
+  }
+  .assistant-message h1 {
+    font-size: 2rem;
+  }
+  .assistant-message h2 {
+    font-size: 1.8rem;
+  }
+  .assistant-message h3 {
+    font-size: 1.4rem;
+  }
+  .assistant-message li {
+    font-size: 1.4rem;
+  }
+  .assistant-message p {
+    font-size: 1.4rem;
   }
   .request__input {
     width: 100vw;
