@@ -685,32 +685,32 @@ li {
     width: 100%;
   }
   .request-panel {
-    padding: 2rem 0rem 10rem 0rem;
+    padding: 2rem 0rem 12rem 0rem;
     width: 100vw;
   }
   .request-panel.welcome {
     top: 58%;
   }
   .warning {
-    bottom: 7rem;
+    bottom: 8rem;
   }
   h3 {
     font-size: 1rem;
   }
   .assistant-message h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
   .assistant-message h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   .assistant-message h3 {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
   .assistant-message li {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
   .assistant-message p {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
   .request__input {
     width: 100vw;
