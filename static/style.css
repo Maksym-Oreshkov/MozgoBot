@@ -497,6 +497,25 @@ li {
   margin: 1em 0;
 }
 
+.copy-button {
+  padding: 4px 8px;
+  background-color: var(--secondary-color);
+  color: var(--dark-text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #45a049;
+}
+
+.copy-status {
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #555;
+}
+
 .navbar {
   position: relative;
   display: flex;

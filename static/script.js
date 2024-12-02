@@ -56,7 +56,6 @@ function updateChatList() {
   });
 }
 
-// Загружаем выбранный чат и отображаем его в центральном чате
 function loadChat(index) {
   currentChatIndex = index;
   const chat = chats[index];
@@ -71,21 +70,53 @@ function loadChat(index) {
   runOnMobile();
 
   chat.messages.forEach((msg) => {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add(
-      msg.role === "user" ? "user-message" : "assistant-message",
-      "message"
-    );
-
     if (msg.role === "assistant") {
-      // Преобразование Markdown в HTML для сообщений ассистента
-      messageElement.innerHTML = marked.parse(msg.content);
-    } else {
-      // Для сообщений пользователя используем textContent
-      messageElement.textContent = msg.content;
-    }
+      // Создание элемента сообщения ассистента
+      const assistantMessageElement = document.createElement("div");
+      assistantMessageElement.classList.add("assistant-message", "message");
 
-    chatContainer.appendChild(messageElement);
+      // Создание контейнера для текста ответа ассистента
+      const assistantResponseContainer = document.createElement("div");
+      assistantResponseContainer.classList.add("assistant-response-container");
+      assistantResponseContainer.innerHTML = marked.parse(msg.content);
+
+      assistantMessageElement.appendChild(assistantResponseContainer);
+
+      // Создание кнопки "Копировать"
+      const copyButton = document.createElement("button");
+      copyButton.textContent = "Копировать";
+      copyButton.classList.add("copy-button");
+
+      // Добавление обработчика события для кнопки копирования
+      copyButton.addEventListener("click", () => {
+        if (navigator.clipboard && window.isSecureContext) {
+          const plainText = assistantResponseContainer.innerText;
+          navigator.clipboard
+            .writeText(plainText)
+            .then(() => {
+              // Отображаем уведомление об успешном копировании
+              alert("Ответ скопирован в буфер обмена!");
+            })
+            .catch((err) => {
+              console.error("Ошибка при копировании: ", err);
+              alert("Не удалось скопировать текст.");
+            });
+        } else {
+          alert("Копирование не поддерживается в вашем браузере.");
+        }
+      });
+
+      assistantMessageElement.appendChild(copyButton);
+
+      // Добавление элемента сообщения ассистента в контейнер чата
+      chatContainer.appendChild(assistantMessageElement);
+    } else {
+      // Для сообщений пользователя
+      const userMessageElement = document.createElement("div");
+      userMessageElement.classList.add("user-message", "message");
+      userMessageElement.textContent = msg.content;
+      chatContainer.appendChild(userMessageElement);
+    }
   });
 
   // Прокрутка вниз после загрузки чата
@@ -176,6 +207,14 @@ async function sendMessage() {
   assistantMessageElement.classList.add("assistant-message", "message");
   chatContainer.appendChild(assistantMessageElement);
 
+  // Создание контейнера для текста ответа ассистента
+  const assistantResponseContainer = document.createElement("div");
+  assistantResponseContainer.classList.add("assistant-response-container");
+  assistantMessageElement.appendChild(assistantResponseContainer);
+
+  // Добавление элемента сообщения ассистента в контейнер чата
+  chatContainer.appendChild(assistantMessageElement);
+
   setTimeout(() => {
     assistantMessageElement.classList.add("visible");
   }, 10);
@@ -252,7 +291,7 @@ async function sendMessage() {
 
             // Используем marked для преобразования Markdown в HTML
             const htmlContent = marked.parse(assistantMessage);
-            assistantMessageElement.innerHTML = htmlContent;
+            assistantResponseContainer.innerHTML = htmlContent;
 
             if (shouldAutoScroll) {
               chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -278,7 +317,7 @@ async function sendMessage() {
 
         // Обновляем HTML с использованием marked
         const htmlContent = marked.parse(assistantMessage);
-        assistantMessageElement.innerHTML = htmlContent;
+        assistantResponseContainer.innerHTML = htmlContent;
 
         // Сохраняем оставшиеся данные
         chats[currentChatIndex].messages.push({
@@ -303,6 +342,29 @@ async function sendMessage() {
     });
 
     setLocalStorage();
+    // Создание кнопки копирования
+    const copyButton = document.createElement("button");
+    copyButton.textContent = "Копировать";
+    copyButton.classList.add("copy-button");
+    assistantMessageElement.appendChild(copyButton);
+
+    // Добавление обработчика события для кнопки копирования
+    copyButton.addEventListener("click", () => {
+      if (navigator.clipboard && window.isSecureContext) {
+        const plainText = assistantResponseContainer.innerText;
+        navigator.clipboard
+          .writeText(plainText)
+          .then(() => {
+            alert("Ответ скопирован в буфер обмена!");
+          })
+          .catch((err) => {
+            console.error("Ошибка при копировании: ", err);
+            alert("Не удалось скопировать текст.");
+          });
+      } else {
+        alert("Копирование не поддерживается в вашем браузере.");
+      }
+    });
   } catch (error) {
     if (error.name === "AbortError") {
       console.log("Запрос был прерван пользователем.");
