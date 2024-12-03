@@ -355,7 +355,8 @@ async function sendMessage() {
         navigator.clipboard
           .writeText(plainText)
           .then(() => {
-            alert("Ответ скопирован в буфер обмена!");
+            copyButton.textContent = "Cкопированно ✓";
+            /*             alert("Ответ скопирован в буфер обмена!"); */
           })
           .catch((err) => {
             console.error("Ошибка при копировании: ", err);

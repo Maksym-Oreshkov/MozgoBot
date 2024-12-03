@@ -193,7 +193,7 @@ p {
   background-color: var(--panel-color);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: all 0.4s;
+  transition: all 0.3s ease-in-out;
   z-index: 299;
 }
 
@@ -210,6 +210,9 @@ p {
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: all 0.3s;
+  white-space: nowrap; /* Запрещает перенос по словам */
+  overflow: hidden; /* Скрывает переполнение */
+  text-overflow: ellipsis; /* Добавляет троеточие при переполнении */
 }
 
 .chat-session ul li:hover {
@@ -252,7 +255,7 @@ li {
   justify-content: start;
   color: var(--light-text-color);
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.1s;
   overflow: hidden;
   visibility: hidden;
   pointer-events: none;
@@ -485,9 +488,11 @@ li {
   background-color: var(--panel-color);
   padding: 10px;
   border-radius: 4px;
-  overflow-x: auto;
-  overflow-y: auto;
-  font-size: 1.4rem;
+  overflow-wrap: break-word; /* Разрывает длинные слова */
+  white-space: pre-wrap; /* Сохраняет пробелы и переносы строк, позволяет перенос длинных строк */
+  font-size: 1.6rem;
+  max-width: 100%; /* Ограничивает ширину элемента */
+  box-sizing: border-box; /* Учитывает паддинги в общей ширине */
 }
 
 .assistant-message blockquote {
@@ -504,10 +509,16 @@ li {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .copy-button:hover {
+  background-color: var(--primary-color);
+}
+
+.copy-button:active {
   background-color: #45a049;
+  transform: scale(0.96);
 }
 
 .copy-status {
