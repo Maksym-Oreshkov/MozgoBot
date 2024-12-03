@@ -95,7 +95,8 @@ function loadChat(index) {
             .writeText(plainText)
             .then(() => {
               // Отображаем уведомление об успешном копировании
-              alert("Ответ скопирован в буфер обмена!");
+              copyButton.textContent = "Cкопированно ✓";
+              /*               alert("Ответ скопирован в буфер обмена!"); */
             })
             .catch((err) => {
               console.error("Ошибка при копировании: ", err);

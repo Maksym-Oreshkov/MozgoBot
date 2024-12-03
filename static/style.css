@@ -517,7 +517,6 @@ li {
 }
 
 .copy-button:active {
-  background-color: #45a049;
   transform: scale(0.96);
 }
 
