@@ -30,7 +30,7 @@
     />
     <meta property="og:site_name" content="Mozgobot" />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="/static/style.css?v=1.1.10" />
+    <link rel="stylesheet" href="/static/style.css?v=1.1.11" />
     <title>Mozgobot</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- (Опционально) Подключение библиотеки highlight.js для подсветки синтаксиса -->
@@ -53,11 +53,18 @@
           <div class="btn-new-chat-panel">﹢ новый чат</div>
           <ul id="chatList"></ul>
           <div class="margin-bottom-60px"></div>
-          <div class="btn-del-chat-panel">очистить историю сессий</div>
-          <div class="app-theme">
-            <button id="theme-toggle">
-              <span id="theme-icon"></span>
-            </button>
+          <button id="options-button">Опции</button>
+          <div class="options">
+            <div class="app-theme">
+              <h3 class="h3-options">Тема</h3>
+              <button id="theme-toggle">
+                <span id="theme-icon"></span>
+              </button>
+            </div>
+            <div class="clear-session">
+              <h3 class="h3-options">История</h3>
+              <div class="btn-del-chat-panel">очистить</div>
+            </div>
           </div>
         </div>
       </div>
@@ -91,6 +98,6 @@
       </div>
     </div>
     <script src="/static/config.js?v=0.0.5"></script>
-    <script src="/static/script.js?v=1.1.19"></script>
+    <script src="/static/script.js?v=1.1.20"></script>
   </body>
 </html>
