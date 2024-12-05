@@ -230,7 +230,7 @@ p {
 }
 
 .chat-session {
-  position: relative; /* Фиксируем панель относительно окна браузера */
+  position: sticky; /* Фиксируем панель относительно окна браузера */
   left: 0; /* Прикрепляем панель к левому краю */
   display: flex;
   flex-direction: column;
@@ -262,7 +262,9 @@ p {
   cursor: pointer;
   transition: all 0.3s;
   white-space: nowrap; /* Запрещает перенос по словам */
-  text-overflow: ellipsis; /* Добавляет троеточие при переполнении */
+  overflow-y: hidden;
+  overflow-x: auto; /* Разрешает прокрутку по оси X */
+  flex-shrink: 0;
 }
 
 .chat-session ul li:hover {

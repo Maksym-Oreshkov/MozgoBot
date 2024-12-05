@@ -39,7 +39,7 @@ function getLocalStorage() {
 }
 
 // Вспомогательная функция для сокращения длинных сообщений
-function getShortenedContent(content, maxLength = 25) {
+function getShortenedContent(content, maxLength = 20) {
   return content.length > maxLength
     ? content.slice(0, maxLength) + "..."
     : content;
