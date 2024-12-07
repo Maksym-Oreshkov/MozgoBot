@@ -1,11 +1,16 @@
 @font-face {
   font-family: "Julius Sans One";
-  src: url("/static/fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf");
+  src: url("/static/fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
   font-family: "Rubik";
-  src: url("/static/fonts/Rubik/Rubik-VariableFont_wght.ttf");
+  src: url("/static/fonts/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900; /* Указывает диапазон толщин для переменного шрифта */
+  font-style: normal;
 }
 
 * {
