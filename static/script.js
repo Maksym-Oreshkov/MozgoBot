@@ -38,12 +38,13 @@ function getLocalStorage() {
   updateChatList();
 }
 
-// Вспомогательная функция для сокращения длинных сообщений
-function getShortenedContent(content, maxLength = 20) {
+// Вспомогательная функция для сокращения длинных сообщений(возможно пригодится)
+
+/* function getShortenedContent(content, maxLength = 20) {
   return content.length > maxLength
     ? content.slice(0, maxLength) + "..."
     : content;
-}
+} */
 
 // Обновляем список чатов в левой колонке
 function updateChatList() {
@@ -51,7 +52,7 @@ function updateChatList() {
   chats.forEach((chat, index) => {
     const newChatItem = document.createElement("li");
     const firstMessageContent = chat.messages[0]?.content || "Пустой чат";
-    newChatItem.textContent = getShortenedContent(firstMessageContent);
+    newChatItem.textContent = firstMessageContent;
     newChatItem.addEventListener("click", () => loadChat(index));
     chatList.appendChild(newChatItem);
   });
@@ -133,7 +134,7 @@ function saveChat(firstMessage) {
   });
 
   const newChatItem = document.createElement("li");
-  newChatItem.textContent = getShortenedContent(firstMessage);
+  newChatItem.textContent = firstMessage;
   newChatItem.addEventListener("click", () => loadChat(chatIndex));
   chatList.appendChild(newChatItem);
 
