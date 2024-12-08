@@ -2,15 +2,11 @@
   font-family: "Julius Sans One";
   src: url("/static/fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf")
     format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Rubik";
   src: url("/static/fonts/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
-  font-weight: 100 900; /* Указывает диапазон толщин для переменного шрифта */
-  font-style: normal;
 }
 
 * {
@@ -72,7 +68,7 @@ html {
 
 body {
   background: var(--background-color);
-  font-family: "Rubik";
+  font-family: "Rubik", sans-serif;
   height: 100%;
 }
 
@@ -90,7 +86,7 @@ h4 {
 }
 
 textarea {
-  font-family: "rubik";
+  font-family: "rubik", sans-serif;
   color: var(--input-text-clor);
 }
 
@@ -437,7 +433,7 @@ li {
   border-radius: 2rem;
   margin-right: 1rem;
   background-color: var(--input-color);
-  box-shadow: inset 0 0 0 0.3px var(--dark-text-color); /* Внутренняя граница */
+  box-shadow: inset 0 0 0 0.5px var(--dark-text-color); /* Внутренняя граница */
   transition: all 0.3s;
   resize: none;
   overflow-y: auto; /* Включаем вертикальный скролл */

@@ -568,8 +568,8 @@ function showWelcomeMessage() {
 
   const welcomeText = CONFIG.welcomeText;
   setTimeout(function () {
-    typeWriter(welcomeMessage, welcomeText, 10);
-  }, 2000);
+    typeWriter(welcomeMessage, welcomeText, 20);
+  }, 2200);
 }
 
 optionsBtn.addEventListener("click", function () {
