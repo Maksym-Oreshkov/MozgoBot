@@ -21,6 +21,7 @@ const panels = document.querySelectorAll(".panel");
 const themeToggle = document.getElementById("theme-toggle");
 const scrollButton = document.createElement("scroll");
 const mainLogoCover = document.querySelector(".main-logo-cover");
+const logoElement = document.getElementById("logo-text");
 const optionsBtn = document.getElementById("options-button");
 document.body.appendChild(scrollButton);
 
@@ -154,6 +155,15 @@ function toggleSendButton(isSending) {
     // Восстанавливаем иконку кнопки отправки
   }
 }
+
+// Пасхалка //
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ё" || event.key === "Ё") {
+    logoElement.textContent =
+      logoElement.textContent === "MozgoBot" ? "MozgoЁБ" : "MozgoBot";
+  }
+});
 
 async function sendMessage() {
   const userInputValue = userInput.value.trim();

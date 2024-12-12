@@ -488,7 +488,7 @@ li {
   background-color: var(--assistant-message);
   color: var(--dark-text-color);
   border-radius: 15px 15px 15px 0;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem;
   margin: 5px 0;
   max-width: 80%;
   word-wrap: break-word;
@@ -519,15 +519,18 @@ li {
   font-weight: 300;
 }
 .assistant-message li {
+  margin: 0 0 0 3rem;
+  line-height: 2rem;
   font-size: 1.8rem;
-  line-height: 1.8;
   font-weight: 400;
 }
 
 .assistant-message p {
   color: var(--dark-text-color);
-  line-height: 1.4;
+  line-height: 2rem;
   font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
 }
 
 .assistant-message a {
