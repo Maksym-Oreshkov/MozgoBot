@@ -29,6 +29,7 @@
   --icons: #505050;
   --hover: #706156;
   --code: #81550a;
+  --sky: linear-gradient(to bottom, #87ceeb 0%, #c5dff9 100%);
 }
 
 .dark-mode {
@@ -46,6 +47,7 @@
   --icons: #a9a9a9;
   --hover: #e3c796;
   --code: #be7e0f;
+  --sky: linear-gradient(to bottom, #03222d 0%, #07335f 100%);
 }
 
 html {
@@ -657,7 +659,7 @@ li {
   display: flex;
   align-items: start;
   padding: 0rem 0rem 2rem 0.2rem;
-  background: var(--input-color);
+  background: var(--sky);
   color: var(--input-text-clor);
   border-radius: 3rem;
   width: 8rem;
@@ -666,6 +668,7 @@ li {
   cursor: pointer;
   font-size: 20px;
   transition: all 0.3s;
+  overflow: hidden;
 }
 
 #theme-icon {
@@ -680,16 +683,16 @@ li {
 }
 
 #theme-icon::before {
-  content: "🌕 light"; /* Иконка солнца */
+  content: "☀️ light"; /* Иконка солнца */
   display: block;
 }
 
 .dark-mode #theme-icon {
-  transform: /* rotate(360deg) */ translateX(1.2rem);
+  transform: translateX(0.8rem) rotate(360deg);
 }
 
 .dark-mode #theme-icon::before {
-  content: "dark 🌑"; /* Иконка луны */
+  content: "dark 🌙"; /* Иконка луны */
 }
 
 .warning {
