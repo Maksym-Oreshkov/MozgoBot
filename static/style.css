@@ -529,8 +529,6 @@ li {
   color: var(--dark-text-color);
   line-height: 2rem;
   font-size: 1.8rem;
-  margin: 0;
-  padding: 0;
 }
 
 .assistant-message a {
