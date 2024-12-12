@@ -160,8 +160,13 @@ function toggleSendButton(isSending) {
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "ё" || event.key === "Ё") {
-    logoElement.textContent =
-      logoElement.textContent === "MozgoBot" ? "MozgoЁБ" : "MozgoBot";
+    logoElement.textContent = "MozgoЁБ";
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === "ё" || event.key === "Ё") {
+    logoElement.textContent = "MozgoBot";
   }
 });
 
