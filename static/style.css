@@ -9,6 +9,12 @@
   src: url("/static/fonts/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Alegreya Sans SC";
+  src: url("/static/fonts/Alegreya_Sans_SC/AlegreyaSansSC-Regular.ttf")
+    format("truetype");
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -603,13 +609,17 @@ li {
 .logo-nav {
   display: flex;
   /*   background: url("/logos/favicon.svg") center / cover no-repeat; */
-  font-family: "Julius Sans One", sans-serif;
   text-align: start;
-  letter-spacing: -0.3rem;
-  font-size: 1.6rem;
   color: var(--icons);
   cursor: default;
   gap: 1rem;
+}
+
+#logo-text {
+  font-family: "Alegreya Sans SC";
+  font-family: /* "Julius Sans One",  */ "Alegreya Sans SC";
+  font-weight: 300;
+  font-size: 3rem;
 }
 
 .logo {

@@ -160,7 +160,7 @@ function toggleSendButton(isSending) {
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "ё" || event.key === "Ё") {
-    logoElement.textContent = "MozgoЁБ";
+    logoElement.textContent = "MozgoЁб";
   }
 });
 
