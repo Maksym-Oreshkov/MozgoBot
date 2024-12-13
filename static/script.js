@@ -159,12 +159,24 @@ function toggleSendButton(isSending) {
 // Пасхалка //
 
 document.addEventListener("keydown", (event) => {
+  // Проверяем, что фокус не в инпуте или текстовом поле
+  const targetTag = event.target.tagName.toLowerCase();
+  if (targetTag === "input" || targetTag === "textarea") {
+    return; // Выходим, если сейчас введение идёт в поле ввода
+  }
+
   if (event.key === "ё" || event.key === "Ё") {
     logoElement.textContent = "MozgoЁб";
   }
 });
 
 document.addEventListener("keyup", (event) => {
+  // Аналогичная проверка для keyup
+  const targetTag = event.target.tagName.toLowerCase();
+  if (targetTag === "input" || targetTag === "textarea") {
+    return;
+  }
+
   if (event.key === "ё" || event.key === "Ё") {
     logoElement.textContent = "MozgoBot";
   }
