@@ -1,7 +1,7 @@
 const CONFIG = {
   apiUrl: "https://ai.mozgobot.ru",
   systemPrompt: "AAP_MozgoBot_SYSTEMPROMPT",
-  model: "mozgobot_2024-11-26:latest",
+  model: "mozgobot_2024-12-13:latest",
   temperature: 0.75,
   ctxNum: 8192,
   welcomeText: "Привет! Я – МозгоБот. Чем могу помочь?",
