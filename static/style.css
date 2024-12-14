@@ -174,7 +174,7 @@ textarea {
   z-index: 300;
   text-decoration: none;
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: 700;
   background-color: var(--options);
   color: var(--dark-text-color);
   cursor: pointer;
@@ -274,24 +274,6 @@ p {
   list-style: none;
   padding: 0;
   width: 100%;
-  /* Создаем маску, которая прозрачна сверху и снизу и непрозрачна по центру. */
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 1rem,
-    black calc(100% - 2rem),
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 1rem,
-    black calc(100% - 2rem),
-    transparent 100%
-  );
-
-  mask-size: cover;
-  -webkit-mask-size: cover;
 }
 
 .chat-session ul li {
