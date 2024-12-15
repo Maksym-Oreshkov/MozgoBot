@@ -481,15 +481,15 @@ li {
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 1rem,
-    black calc(100% - 1rem),
+    black 0%,
+    black calc(99% - 1rem),
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 1rem,
-    black calc(100% - 1rem),
+    black 0%,
+    black calc(99% - 1rem),
     transparent 100%
   );
 
@@ -506,7 +506,7 @@ li {
   border-radius: 15px 15px 0 15px;
   padding: 10px;
   margin: 5px 0;
-  max-width: 80%;
+  max-width: 90%;
   word-wrap: break-word;
   opacity: 0.8;
 }
@@ -520,7 +520,7 @@ li {
   border-radius: 15px 15px 15px 0;
   padding: 1rem;
   margin: 5px 0;
-  max-width: 80%;
+  max-width: 90%;
   word-wrap: break-word;
   opacity: 0.8;
   white-space: pre-wrap; /* Сохраняет пробелы и переносы строк */
@@ -546,7 +546,7 @@ li {
   padding-top: 1em;
   margin-bottom: 0.5em;
   font-size: 1.4rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 .assistant-message li {
   margin: 0 0 0 3rem;
