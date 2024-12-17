@@ -41,7 +41,7 @@
 .dark-mode {
   /* Темная тема */
   --background-color: #1e1e1e;
-  --primary-color: #6c4f2a;
+  --primary-color: #c34813;
   --secondary-color: #706156;
   --panel-color: #4a4a5855;
   --input-color: #3a3b3f;
@@ -343,17 +343,66 @@ li {
 }
 
 .welcome-container {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: absolute;
-  gap: 1rem;
   top: 0vh;
-  left: 8%;
   width: 100%;
   transform: translateY(-50%);
+  z-index: -200;
 }
 
+.predefined-container {
+  position: relative;
+  justify-content: center;
+  position: relative;
+  top: 13rem;
+  margin: 0 auto;
+  background-color: var(--input-color);
+  border-radius: 3rem;
+  padding: 1rem;
+  z-index: 400;
+}
+
+.prompt-buttons {
+  display: flex;
+  overflow-x: scroll;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+  border-radius: 2rem;
+}
+
+.promptBtn {
+  border-radius: 1.5rem;
+  border-style: none;
+  padding: 1rem;
+  text-decoration: none;
+  white-space: nowrap; /* Запрещает перенос по словам */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  background-color: var(--primary-color);
+  color: var(--dark-text-color);
+  cursor: pointer;
+}
+
+/* Стилизация скроллбара для WebKit-браузеров */
+/* .prompt-buttons::-webkit-scrollbar {
+  height: 4px;
+}
+
+.prompt-buttons::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.prompt-buttons::-webkit-scrollbar-thumb:active {
+  background: #333;
+} */
+
 .welcome-message {
+  padding-left: 8%;
   text-align: left;
   font-size: 2rem;
   font-weight: 300;
@@ -400,7 +449,7 @@ li {
 }
 
 .request-btn:hover {
-  background-color: var(--hover); /* Цвет иконки */
+  background-color: var(--hover);
 }
 .request-btn:active {
   color: var(--secondary-color);
@@ -409,14 +458,13 @@ li {
 
 /* Стили для кнопки остановки */
 .stop-button {
-  background-color: rgb(210, 73, 73); /* Красный цвет для остановки */
+  background-color: #c34813;
   -webkit-mask: url("/static/icons/stop_btn.svg") center / contain no-repeat;
   mask: url("/static/icons/stop_btn.svg") center / contain no-repeat;
-  /* Можно добавить другие стили, если необходимо */
 }
 
 .mic-btn {
-  background-color: var(--icons); /* Цвет иконки */
+  background-color: var(--icons);
   -webkit-mask: url("/static/icons/mic_btn.svg") center / contain no-repeat;
   mask: url("/static/icons/mic_btn.svg") center / contain no-repeat;
   margin-top: 0.6rem;
@@ -430,7 +478,7 @@ li {
 }
 
 .mic-btn.recording {
-  background-color: rgb(210, 73, 73);
+  background-color: #c34813;
   border-radius: 3rem;
   transform: scale(1.26);
 }
@@ -759,6 +807,9 @@ li {
   li {
     font-size: 1.8rem;
   }
+  .predefined-container {
+    width: 80%;
+  }
   .request__input {
     font-size: 1.4rem;
   }
@@ -794,6 +845,9 @@ li {
     position: absolute;
     height: 100%;
     z-index: 500;
+  }
+  .predefined-container {
+    width: 80%;
   }
   .btn-new-chat-panel {
     font-size: 2.2rem;

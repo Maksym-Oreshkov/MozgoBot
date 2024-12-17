@@ -23,6 +23,8 @@ const scrollButton = document.createElement("scroll");
 const mainLogoCover = document.querySelector(".main-logo-cover");
 const logoElement = document.getElementById("logo-text");
 const optionsBtn = document.getElementById("options-button");
+const promptButtons = document.querySelectorAll(".promptBtn");
+const predefinedContainer = document.querySelector(".predefined-container");
 document.body.appendChild(scrollButton);
 
 // AbortController для возможности отмены запроса
@@ -67,6 +69,7 @@ function loadChat(index) {
 
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
+    predefinedContainer.style.display = "none";
   }
   requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
@@ -188,6 +191,7 @@ async function sendMessage() {
 
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
+    predefinedContainer.style.display = "none";
   }
   requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
@@ -533,6 +537,7 @@ btnNewChat.addEventListener("click", function () {
   }
   requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
+
   runOnMobile();
 });
 
@@ -602,6 +607,18 @@ function showWelcomeMessage() {
 optionsBtn.addEventListener("click", function () {
   document.querySelector(".options").classList.toggle("active");
 });
+
+promptButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const promptText = button.getAttribute("data-prompt");
+    sendPredefinedPrompt(promptText);
+  });
+});
+
+function sendPredefinedPrompt(promptText) {
+  userInput.value = promptText;
+  sendMessage();
+}
 
 // Голосовой ввод через микрофон
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {

@@ -30,7 +30,7 @@
     />
     <meta property="og:site_name" content="Mozgobot" />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="/static/style.css?v=1.1.22" />
+    <link rel="stylesheet" href="/static/style.css?v=1.2.0" />
     <title>Mozgobot</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- (Опционально) Подключение библиотеки highlight.js для подсветки синтаксиса -->
@@ -90,14 +90,37 @@
           <button id="sendMessageBtn" class="submit-btn request-btn"></button>
           <div class="welcome-container">
             <div class="welcome-message"></div>
+            <div class="predefined-container">
+              <div class="prompt-buttons">
+                <button
+                  class="promptBtn"
+                  data-prompt="Как мне правильно задать запрос"
+                >
+                  Как задать запрос
+                </button>
+                <button class="promptBtn" data-prompt="Дай совет">
+                  Дай совет
+                </button>
+                <button class="promptBtn" data-prompt="Создай шутку">
+                  Создай шутку
+                </button>
+                <button class="promptBtn" data-prompt="Факты о животных">
+                  Факты о животных
+                </button>
+                <button class="promptBtn" data-prompt="Объясни концепцию">
+                  Объясни концепцию
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+
         <h3 class="warning">
           MozgoBot может ошибаться, проверяйте актуальную информацию
         </h3>
       </div>
     </div>
     <script src="/static/config.js?v=0.0.6"></script>
-    <script src="/static/script.js?v=1.1.27"></script>
+    <script src="/static/script.js?v=1.2.0"></script>
   </body>
 </html>
