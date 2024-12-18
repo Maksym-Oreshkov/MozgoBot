@@ -475,8 +475,13 @@ userInput.addEventListener("keydown", function (event) {
 // Функция для управления состоянием панели
 function runOnMobile() {
   if (isMobile()) {
+    // Логика для мобильных устройств
+    removeActivePanel();
+  } else if (isTernedMobile()) {
+    // Логика для планшетов
     removeActivePanel();
   } else {
+    // Логика для десктопа
     setTimeout(activateActivePanel, 2000);
   }
 }
@@ -484,6 +489,10 @@ function runOnMobile() {
 // Проверка мобильного разрешения
 function isMobile() {
   return window.matchMedia("(max-width: 480px)").matches;
+}
+
+function isTernedMobile() {
+  return window.matchMedia("(max-height: 460px)").matches;
 }
 
 // Функция для удаления класса "active" у всех панелей
@@ -574,6 +583,10 @@ document.addEventListener("DOMContentLoaded", function () {
     mainLogoCover.classList.remove("visible");
   }, 1000);
 });
+
+setTimeout(function () {
+  predefinedContainer.classList.add("visible");
+}, 2800);
 
 // Приветствие
 function typeWriter(elem, text, speed) {
