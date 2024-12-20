@@ -30,7 +30,7 @@
     />
     <meta property="og:site_name" content="Mozgobot" />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="/static/style.css?v=1.2.1" />
+    <link rel="stylesheet" href="/static/style.css?v=1.2.2" />
     <title>Mozgobot</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- (Опционально) Подключение библиотеки highlight.js для подсветки синтаксиса -->
@@ -71,9 +71,10 @@
       <div class="main-body">
         <div class="navbar margin-bottom-10px">
           <div class="logo-nav">
-            <h1 id="logo-text">MozgoBot</h1>
-            <!--             <div class="logo"></div> -->
+            <h1 id="logo-text">Mozgo<span class="b-letter">B</span>ot</h1>
           </div>
+          <canvas id="canvas"></canvas>
+          <canvas id="snowCanvas"></canvas>
         </div>
         <div id="chatContainer">
           <!-- Сюда будут добавляться сообщения -->
@@ -121,6 +122,6 @@
       </div>
     </div>
     <script src="/static/config.js?v=0.0.6"></script>
-    <script src="/static/script.js?v=1.2.1"></script>
+    <script src="/static/script.js?v=1.2.2"></script>
   </body>
 </html>

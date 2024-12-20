@@ -131,7 +131,7 @@ textarea {
   mask: url("/static/icons/left_panel_alt_btn.svg") center / contain no-repeat;
   width: 3.5rem;
   height: 3rem;
-  z-index: 1000;
+  z-index: 3000;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -430,6 +430,7 @@ li {
   top: 92vh;
   opacity: 0;
   transition: opacity 0.5s ease;
+  z-index: 800;
 }
 
 .request-panel.visible {
@@ -441,6 +442,7 @@ li {
   left: 0;
   width: 100%;
   transform: translateY(-50%);
+  z-index: 800;
 }
 
 .request-btn {
@@ -535,7 +537,7 @@ li {
   gap: 2rem;
   max-height: 85vh;
   transition: 0.3s;
-  z-index: 200;
+  z-index: 900;
   /* Создаем маску, которая прозрачна сверху и снизу и непрозрачна по центру. */
   mask-image: linear-gradient(
     to bottom,
@@ -703,6 +705,25 @@ li {
   font-size: 3rem;
 }
 
+.b-letter {
+  position: relative;
+  display: inline-block;
+  width: 17px;
+  height: 27px;
+  overflow: hidden;
+}
+
+.b-letter::before {
+  content: "";
+  position: absolute;
+  background: url("/static/icons/hat.png") no-repeat;
+  background-size: contain;
+  width: 17px;
+  height: 15px;
+  left: -2px; /* смещение вправо */
+  top: 3px; /* смещение вниз */
+}
+
 .logo {
   width: 3rem;
   height: 3rem;
@@ -716,9 +737,11 @@ li {
   position: absolute;
   width: 10rem;
   height: 10rem;
+  /*   background: url(/static/logos/event.png) center no-repeat;
+  background-size: contain; */
   background-color: var(--icons);
-  -webkit-mask: url("/static/logos/main-logo.png") center / contain no-repeat;
-  mask: url("/static/logos/main-logo.png") center / contain no-repeat;
+  -webkit-mask: url("/static/logos/logo-event.png") center / contain no-repeat;
+  mask: url("/static/logos/logo-event.png") center / contain no-repeat;
   border: none;
   z-index: 10;
   opacity: 0;
@@ -738,6 +761,39 @@ li {
   width: 100%;
   padding: 1rem 1rem 0 1rem;
   box-shadow: inset 0px 0.3px 0px 0px var(--dark-text-color);
+}
+
+#snowCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* чтобы не блокировал действия */
+  z-index: 1;
+}
+
+#canvas {
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  z-index: -100;
+}
+
+/* Подсказка для пользователя */
+.hint {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #fff;
+  font-family: sans-serif;
+  opacity: 0.7;
+  z-index: -100;
 }
 
 .h3-options {
@@ -867,7 +923,7 @@ li {
   .chat-session {
     position: absolute;
     height: 100%;
-    z-index: 500;
+    z-index: 1000;
   }
   .predefined-container {
     width: 80%;

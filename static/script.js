@@ -543,10 +543,10 @@ btnNewChat.addEventListener("click", function () {
   userInput.value = "";
   if (welcomeMessage) {
     welcomeMessage.style.display = "none";
+    predefinedContainer.style.display = "none";
   }
   requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
-
   runOnMobile();
 });
 
@@ -560,6 +560,7 @@ btnDelChat.addEventListener("click", function () {
   requestPanel.classList.remove("welcome");
   requestPanel.classList.add("visible");
   welcomeMessage.style.display = "none";
+  predefinedContainer.style.display = "none";
   setLocalStorage();
 });
 
@@ -632,6 +633,169 @@ function sendPredefinedPrompt(promptText) {
   userInput.value = promptText;
   sendMessage();
 }
+
+// Новогодний Ивент
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let w = window.innerWidth;
+let h = window.innerHeight;
+canvas.width = w;
+canvas.height = h;
+
+// Массив частиц
+let particles = [];
+
+class Particle {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.radius = Math.random() * 8 + 1;
+    this.life = 180; // примерно 3 секунды при 60fps
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = Math.random() * 3 + 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.alpha = 1;
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    this.alpha = this.life / 180;
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// Функция анимации
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw(ctx);
+
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+
+  if (particles.length > 0) {
+    requestAnimationFrame(animate);
+  }
+}
+
+// Запуск искр
+function spark(x, y) {
+  const colors = [
+    "rgba(255,223,0,1)", // золотистый
+    "rgba(255,140,0,1)", // оранжевый
+    "rgba(255,255,255,1)", // белый
+  ];
+
+  for (let i = 0; i < 100; i++) {
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    particles.push(new Particle(x, y, c));
+  }
+}
+
+// Функция, запускающая анимацию
+function runSparkAnimation() {
+  // Обновляем размеры и очищаем массив частиц
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
+  particles = [];
+
+  // Запуск анимации в центре экрана
+  spark(w / 2, h / 2);
+  animate();
+}
+
+// При загрузке запустить анимацию один раз
+window.onload = runSparkAnimation;
+
+// Адаптация под изменение размера окна
+window.addEventListener("resize", () => {
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
+});
+
+///Снег
+
+(function () {
+  // Анимация снега
+  const snowCanvas = document.getElementById("snowCanvas");
+  const snowCtx = snowCanvas.getContext("2d");
+
+  let snowW = window.innerWidth;
+  let snowH = window.innerHeight;
+  snowCanvas.width = snowW;
+  snowCanvas.height = snowH;
+
+  const numFlakes = 200;
+  const flakes = [];
+  for (let i = 0; i < numFlakes; i++) {
+    flakes.push({
+      x: Math.random() * snowW,
+      y: Math.random() * snowH,
+      r: Math.random() * 3 + 1,
+      d: Math.random() * 0.5 + 0.5,
+    });
+  }
+
+  let angle = 0;
+  function drawSnow() {
+    snowCtx.clearRect(0, 0, snowW, snowH);
+    snowCtx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    snowCtx.beginPath();
+    for (let i = 0; i < numFlakes; i++) {
+      let f = flakes[i];
+      snowCtx.moveTo(f.x, f.y);
+      snowCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+    }
+    snowCtx.fill();
+    moveFlakes();
+    requestAnimationFrame(drawSnow);
+  }
+
+  function moveFlakes() {
+    angle = 1;
+    for (let i = 0; i < numFlakes; i++) {
+      let f = flakes[i];
+      f.y += Math.pow(f.d, 2) + 0.1;
+      f.x += Math.sin(angle) * 0.5;
+      if (f.y > snowH) {
+        f.y = -f.r;
+        f.x = Math.random() * snowW;
+      }
+    }
+  }
+
+  drawSnow();
+
+  window.addEventListener("resize", () => {
+    snowW = window.innerWidth;
+    snowH = window.innerHeight;
+    snowCanvas.width = snowW;
+    snowCanvas.height = snowH;
+  });
+})();
 
 // Голосовой ввод через микрофон
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
