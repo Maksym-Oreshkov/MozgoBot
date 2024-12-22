@@ -736,10 +736,9 @@ window.addEventListener("resize", () => {
   canvas.height = h;
 });
 
-///Снег
+// Анимация снега
 
 (function () {
-  // Анимация снега
   const snowCanvas = document.getElementById("snowCanvas");
   const snowCtx = snowCanvas.getContext("2d");
 
@@ -750,16 +749,20 @@ window.addEventListener("resize", () => {
 
   const numFlakes = 200;
   const flakes = [];
+
+  // Инициализация снежинок с y = -r (выходят сверху экрана)
   for (let i = 0; i < numFlakes; i++) {
     flakes.push({
       x: Math.random() * snowW,
-      y: Math.random() * snowH,
+      y: -Math.random() * snowH, // Все снежинки начинают за пределами экрана сверху
       r: Math.random() * 3 + 1,
       d: Math.random() * 0.5 + 0.5,
     });
   }
 
   let angle = 0;
+
+  // Функция рисования снежинок
   function drawSnow() {
     snowCtx.clearRect(0, 0, snowW, snowH);
     snowCtx.fillStyle = "rgba(255, 255, 255, 0.8)";
@@ -774,12 +777,14 @@ window.addEventListener("resize", () => {
     requestAnimationFrame(drawSnow);
   }
 
+  // Функция перемещения снежинок
   function moveFlakes() {
     angle = 1;
     for (let i = 0; i < numFlakes; i++) {
       let f = flakes[i];
       f.y += Math.pow(f.d, 2) + 0.1;
       f.x += Math.sin(angle) * 0.5;
+      // Перемещение снежинок обратно сверху, если они упали ниже
       if (f.y > snowH) {
         f.y = -f.r;
         f.x = Math.random() * snowW;
@@ -787,8 +792,11 @@ window.addEventListener("resize", () => {
     }
   }
 
-  drawSnow();
+  setTimeout(() => {
+    drawSnow();
+  }, 2000);
 
+  // Адаптация к изменению размера окна
   window.addEventListener("resize", () => {
     snowW = window.innerWidth;
     snowH = window.innerHeight;
