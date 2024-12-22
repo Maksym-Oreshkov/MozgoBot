@@ -414,10 +414,12 @@ li {
 
 .welcome-message {
   padding-left: 8%;
+  padding-right: 8%;
   text-align: left;
   font-size: 2rem;
   font-weight: 300;
   color: var(--dark-text-color);
+  white-space: pre-wrap;
   z-index: 200;
   cursor: default;
 }
@@ -941,7 +943,7 @@ li {
     width: 100vw;
   }
   .request-panel.welcome {
-    top: 58%;
+    top: 50%;
   }
   .warning {
     bottom: 8rem;
