@@ -846,7 +846,9 @@ li {
     height: 100vh;
     max-height: 100%;
   }
-
+  .predefined-container {
+    width: 80%;
+  }
   .active {
     width: 40%;
   }
