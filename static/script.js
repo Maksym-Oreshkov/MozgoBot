@@ -748,7 +748,7 @@ window.addEventListener("resize", () => {
   snowCanvas.width = snowW;
   snowCanvas.height = snowH;
 
-  const numFlakes = 200;
+  const numFlakes = 500;
   const flakes = [];
 
   // Инициализация снежинок с y = -r (выходят сверху экрана)
