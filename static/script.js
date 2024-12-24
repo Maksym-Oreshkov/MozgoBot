@@ -59,6 +59,7 @@ function updateChatList() {
     newChatItem.addEventListener("click", () => loadChat(index));
     chatList.appendChild(newChatItem);
   });
+  chatList.scrollTop = chatList.scrollHeight;
 }
 
 function loadChat(index) {

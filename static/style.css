@@ -27,6 +27,7 @@
   --secondary-color: #e3c796;
   --panel-color: #b1b1b156;
   --input-color: #ecedf0;
+  --predefined-container: #ecedf0d4;
   --light-text-color: #ddd9d9;
   --dark-text-color: #1e1e1e;
   --input-text-clor: #1e1e1e;
@@ -46,6 +47,7 @@
   --secondary-color: #706156;
   --panel-color: #4a4a5855;
   --input-color: #3a3b3f;
+  --predefined-container: #3a3b3fda;
   --light-text-color: #ffffff;
   --dark-text-color: #ffffff;
   --input-text-clor: #ddd9d9;
@@ -271,7 +273,7 @@ p {
 
 .chat-session ul {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   list-style: none;
   padding: 0;
   width: 100%;
@@ -305,8 +307,14 @@ li {
 }
 
 #chatList {
+  transform: scaleY(-1);
   max-height: 90%; /* Установите нужную вам высоту */
   overflow-y: auto; /* Включает вертикальную прокрутку при необходимости */
+}
+
+#chatList li {
+  /* Инвертируем обратно, чтобы текст был читаемым */
+  transform: scaleY(-1);
 }
 
 .main-body {
@@ -359,7 +367,7 @@ li {
   justify-content: center;
   top: 12rem;
   margin: 0 auto;
-  background-color: var(--input-color);
+  background-color: var(--predefined-container);
   border-radius: 3rem;
   padding: 1rem;
   z-index: 400;
