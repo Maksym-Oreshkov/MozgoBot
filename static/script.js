@@ -41,14 +41,6 @@ function getLocalStorage() {
   updateChatList();
 }
 
-// Вспомогательная функция для сокращения длинных сообщений(возможно пригодится)
-
-/* function getShortenedContent(content, maxLength = 20) {
-  return content.length > maxLength
-    ? content.slice(0, maxLength) + "..."
-    : content;
-} */
-
 // Обновляем список чатов в левой колонке
 function updateChatList() {
   chatList.innerHTML = "";
@@ -145,6 +137,20 @@ function saveChat(firstMessage) {
 
   setLocalStorage();
 }
+
+// Добавить бекграунд для нажатой кнопки сессии
+let activeLi = null;
+
+chatList.addEventListener("click", function (event) {
+  let liElement = event.target.closest("li");
+  if (liElement && chatList.contains(liElement)) {
+    if (activeLi) {
+      activeLi.classList.remove("active-li");
+    }
+    liElement.classList.add("active-li");
+    activeLi = liElement;
+  }
+});
 
 //  Функция для изменения состояния кнопки отправки
 function toggleSendButton(isSending) {
